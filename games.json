@@ -528,8 +528,8 @@
     ]
   },
   {
-    "slug": "geometry-dash-zubero",
-    "title": "Geometry Dash Zubero",
+    "slug": "geometry-dash-subzero",
+    "title": "Geometry Dash SubZero",
     "genre": "Platform",
     "tags": ["Platform", "Rhythm", "Jumping", "Single Player"],
     "gameDir": "",
@@ -537,14 +537,14 @@
     "embedUrl": "https://lolygames.github.io/gd-zubero/",
     "domain": "",
     "colors": {
-      "accent": "#a855f7",
-      "accent2": "#ec4899"
+      "accent": "#06b6d4",
+      "accent2": "#2563eb"
     },
-    "cardGradient": ["#7e22ce", "#db2777"],
-    "initial": "GDZ",
-    "image": "geometry-dash-zubero.jpg",
+    "cardGradient": ["#0891b2", "#1d4ed8"],
+    "initial": "GDS",
+    "image": "geometry-dash-subzero.jpg",
     "seo": {
-      "metaDescription": "Play Geometry Dash Zubero online for free. Jump, fly, and navigate through challenging levels filled with obstacles and fast-paced platforming action.",
+      "metaDescription": "Play Geometry Dash SubZero online for free. Jump, fly, and navigate challenging levels filled with obstacles, fast-paced action, and precise rhythm-based gameplay.",
       "ogImage": ""
     },
     "rating": {
@@ -553,7 +553,7 @@
     },
     "released": "",
     "controls": "Mouse / Tap / Space",
-    "about": "Geometry Dash Zubero is a fast-paced rhythm platformer inspired by the iconic Geometry Dash experience. Control your character through challenging levels packed with obstacles, spikes, jumps, and precise timing sections. Stay focused, react quickly, and keep moving as the difficulty increases.",
+    "about": "Geometry Dash SubZero is a fast-paced rhythm platformer inspired by the iconic Geometry Dash experience. Control your character through challenging levels filled with spikes, obstacles, jumps, and precise timing sections. Stay focused, react quickly, and keep moving as the difficulty increases.",
     "howto": [
       "Left Click / Tap / Space: Jump or control your character.",
       "Avoid spikes, obstacles, and other hazards throughout each level.",
@@ -563,19 +563,19 @@
     ],
     "faq": [
       {
-        "q": "Is Geometry Dash Zubero free to play?",
-        "a": "Yes — Geometry Dash Zubero can be played directly in your browser for free without downloading or installing the game."
+        "q": "Is Geometry Dash SubZero free to play?",
+        "a": "Yes — Geometry Dash SubZero can be played directly in your browser for free without downloading or installing the game."
       },
       {
-        "q": "Can I play Geometry Dash Zubero on mobile?",
+        "q": "Can I play Geometry Dash SubZero on mobile?",
         "a": "Yes. The game can be played on supported mobile devices using touch controls."
       },
       {
-        "q": "What are the controls for Geometry Dash Zubero?",
+        "q": "What are the controls for Geometry Dash SubZero?",
         "a": "Use the left mouse button, tap the screen, or press Space to control the character and perform jumps."
       },
       {
-        "q": "How do I get better at Geometry Dash Zubero?",
+        "q": "How do I get better at Geometry Dash SubZero?",
         "a": "Practice each section, learn the timing of obstacles, and focus on maintaining consistent jumps rather than rushing through difficult sections."
       }
     ]
