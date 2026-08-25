@@ -526,5 +526,58 @@
         "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
       }
     ]
+  },
+  {
+    "slug": "geometry-dash-zubero",
+    "title": "Geometry Dash Zubero",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Jumping", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://lolygames.github.io/gd-zubero/",
+    "domain": "",
+    "colors": {
+      "accent": "#a855f7",
+      "accent2": "#ec4899"
+    },
+    "cardGradient": ["#7e22ce", "#db2777"],
+    "initial": "GDZ",
+    "image": "geometry-dash-zubero.jpg",
+    "seo": {
+      "metaDescription": "Play Geometry Dash Zubero online for free. Jump, fly, and navigate through challenging levels filled with obstacles and fast-paced platforming action.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.4,
+      "count": 0
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Dash Zubero is a fast-paced rhythm platformer inspired by the iconic Geometry Dash experience. Control your character through challenging levels packed with obstacles, spikes, jumps, and precise timing sections. Stay focused, react quickly, and keep moving as the difficulty increases.",
+    "howto": [
+      "Left Click / Tap / Space: Jump or control your character.",
+      "Avoid spikes, obstacles, and other hazards throughout each level.",
+      "Time your jumps carefully to pass difficult sections.",
+      "Keep moving and learn the level layout through repeated attempts.",
+      "Reach the end of each level without hitting an obstacle."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash Zubero free to play?",
+        "a": "Yes — Geometry Dash Zubero can be played directly in your browser for free without downloading or installing the game."
+      },
+      {
+        "q": "Can I play Geometry Dash Zubero on mobile?",
+        "a": "Yes. The game can be played on supported mobile devices using touch controls."
+      },
+      {
+        "q": "What are the controls for Geometry Dash Zubero?",
+        "a": "Use the left mouse button, tap the screen, or press Space to control the character and perform jumps."
+      },
+      {
+        "q": "How do I get better at Geometry Dash Zubero?",
+        "a": "Practice each section, learn the timing of obstacles, and focus on maintaining consistent jumps rather than rushing through difficult sections."
+      }
+    ]
   }
 ]
