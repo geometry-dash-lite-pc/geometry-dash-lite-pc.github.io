@@ -35,7 +35,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { renderPage } = require("./lib/render");
+const { renderPage, renderLegalPage, legalPages } = require("./lib/render");
 
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -52,6 +52,17 @@ function writeGameSite(game, outDir, mode, depth) {
 
   fs.copyFileSync(path.join(__dirname, "css", "style.css"), path.join(outDir, "style.css"));
   fs.copyFileSync(path.join(__dirname, "js", "main.js"), path.join(outDir, "main.js"));
+  fs.copyFileSync(path.join(__dirname, "images", "logo.png"), path.join(outDir, "logo.png"));
+
+  const faviconDir = path.join(__dirname, "images", "favicon");
+  fs.readdirSync(faviconDir).forEach(function (file) {
+    fs.copyFileSync(path.join(faviconDir, file), path.join(outDir, file));
+  });
+
+  for (const pageDef of legalPages) {
+    const html = renderLegalPage(pageDef, games, mode, { depth });
+    fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
+  }
 
   // copy game images if they exist
   var imagesDir = path.join(__dirname, "images", "games");

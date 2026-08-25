@@ -1,5 +1,8 @@
 "use strict";
 
+const legal = require("./legal-content");
+const SITE_NAME = legal.SITE_NAME;
+
 /**
  * Shared page renderer. Every game gets an identical layout/behavior —
  * the only inputs that vary are the `game` object (from games.json) and
@@ -40,6 +43,16 @@ function escapeHtml(str) {
       "'": "&#39;",
     }[c];
   });
+}
+
+function renderFaviconLinks(assetsBase) {
+  var base = assetsBase + "/favicon";
+  return (
+    '<link rel="icon" href="' + base + '.ico" sizes="any">\n' +
+    '<link rel="icon" type="image/png" sizes="32x32" href="' + base + '-32x32.png">\n' +
+    '<link rel="icon" type="image/png" sizes="16x16" href="' + base + '-16x16.png">\n' +
+    '<link rel="apple-touch-icon" sizes="180x180" href="' + base + '-apple-touch.png">\n'
+  );
 }
 
 function gameUrl(game, mode, depth) {
@@ -137,6 +150,102 @@ function renderFaq(faq) {
     .join("");
 }
 
+function legalUrl(pageSlug, assetsBase) {
+  return assetsBase + "/" + pageSlug + ".html";
+}
+
+function renderFooter(assetsBase) {
+  var aboutPage = legal.pages.find(function (p) { return p.slug === "about"; });
+  var contactPage = legal.pages.find(function (p) { return p.slug === "contact"; });
+  var otherPages = legal.pages.filter(function (p) {
+    return p.slug !== "about" && p.slug !== "contact";
+  });
+
+  return (
+    '<footer class="site-footer">\n' +
+    '<div class="footer-inner">\n' +
+    '<div class="footer-col footer-col-brand">\n' +
+    '<img class="footer-logo" src="' + assetsBase + '/logo.png" alt="' + SITE_NAME + ' logo" width="103" height="110" loading="lazy">\n' +
+    "</div>\n" +
+    '<div class="footer-col">\n' +
+    '<a class="footer-col-title" href="' + legalUrl(aboutPage.slug, assetsBase) + '">' + escapeHtml(aboutPage.navLabel) + "</a>\n" +
+    "</div>\n" +
+    '<div class="footer-col">\n' +
+    '<a class="footer-col-title" href="' + legalUrl(contactPage.slug, assetsBase) + '">' + escapeHtml(contactPage.navLabel) + "</a>\n" +
+    "</div>\n" +
+    '<div class="footer-col">\n' +
+    '<span class="footer-col-title footer-col-heading">Pages</span>\n' +
+    '<ul class="footer-links">\n' +
+    otherPages
+      .map(function (p) {
+        return '<li><a href="' + legalUrl(p.slug, assetsBase) + '">' + escapeHtml(p.navLabel) + "</a></li>\n";
+      })
+      .join("") +
+    "</ul>\n" +
+    "</div>\n" +
+    '<p class="muted footer-copy">© <span id="year"></span> ' + SITE_NAME + '. All games belong to their respective creators.</p>\n' +
+    "</div>\n" +
+    "</footer>\n"
+  );
+}
+
+function renderLegalPage(pageDef, catalog, mode, opts) {
+  opts = opts || {};
+  var depth = opts.depth === undefined ? 1 : opts.depth;
+  var selfPrefix = opts.selfPrefix || null;
+  var assetsBase =
+    mode === "dev"
+      ? "/assets"
+      : selfPrefix
+        ? selfPrefix.replace(/\/$/, "")
+        : ".";
+  var homeHref = mode === "dev" || mode === "portal" ? "/" : "https://geometrydashlite.example/";
+
+  return (
+    "<!DOCTYPE html>\n" +
+    '<html lang="en">\n' +
+    "<head>\n" +
+    '<meta charset="UTF-8">\n' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
+    "<title>" + escapeHtml(pageDef.title) + " | " + SITE_NAME + "</title>\n" +
+    '<meta name="description" content="' + escapeHtml(pageDef.metaDescription) + '">\n' +
+    '<meta name="robots" content="index,follow">\n' +
+    renderFaviconLinks(assetsBase) +
+    '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+    '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">\n' +
+    '<link rel="stylesheet" href="' + assetsBase + '/style.css">\n' +
+    "</head>\n" +
+    '<body>\n' +
+    '<a class="skip-link" href="#main">Skip to content</a>\n' +
+    '<header class="site-header" id="siteHeader">\n' +
+    '<div class="header-inner">\n' +
+    '<a class="brand" href="' + homeHref + '">\n' +
+    '<span class="brand-mark" aria-hidden="true">▮▮</span>\n' +
+    '<span class="brand-name">' + SITE_NAME + '</span>\n' +
+    "</a>\n" +
+    '<nav class="main-nav" id="mainNav" aria-label="Primary">\n' +
+    '<a href="' + homeHref + '">All Games</a>\n' +
+    "</nav>\n" +
+    '<button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Toggle menu">\n' +
+    "<span></span><span></span><span></span>\n" +
+    "</button>\n" +
+    "</div>\n" +
+    "</header>\n" +
+    '<main id="main">\n' +
+    '<section class="content-section legal-page reveal">\n' +
+    '<article class="about">\n' +
+    pageDef.bodyHtml +
+    "\n</article>\n" +
+    "</section>\n" +
+    "</main>\n" +
+    renderFooter(assetsBase) +
+    '<script src="' + assetsBase + '/main.js"></script>\n' +
+    "</body>\n" +
+    "</html>\n"
+  );
+}
+
 function renderGrid(catalog, currentSlug, mode, limit, depth, assetsBase) {
   var list = catalog.filter(function (g) {
     return g.slug !== currentSlug;
@@ -200,14 +309,14 @@ function renderPage(game, catalog, mode, opts) {
     escapeHtml(game.title) +
     " — Play Free Online " +
     escapeHtml(game.genre) +
-    " Game | PlayPortal</title>\n" +
+    " Game | " + SITE_NAME + "</title>\n" +
     '<meta name="description" content="' +
     escapeHtml(game.seo.metaDescription) +
     '">\n' +
     (canonical ? '<link rel="canonical" href="' + canonical + '">\n' : "") +
     '<meta name="robots" content="index,follow">\n' +
     '<meta property="og:type" content="website">\n' +
-    '<meta property="og:site_name" content="PlayPortal">\n' +
+    '<meta property="og:site_name" content="' + SITE_NAME + '">\n' +
     '<meta property="og:title" content="' +
     escapeHtml(game.title) +
     " — Play Free Online " +
@@ -242,6 +351,7 @@ function renderPage(game, catalog, mode, opts) {
       },
     }) +
     "\n</script>\n" +
+    renderFaviconLinks(assetsBase) +
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
     '<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">\n' +
@@ -261,16 +371,16 @@ function renderPage(game, catalog, mode, opts) {
     '<a class="brand" href="' +
     (mode === "dev" || mode === "portal"
       ? "/"
-      : "https://playportal.example/") +
+      : "https://geometrydashlite.example/") +
     '">\n' +
     '<span class="brand-mark" aria-hidden="true">▮▮</span>\n' +
-    '<span class="brand-name">PlayPortal</span>\n' +
+    '<span class="brand-name">' + SITE_NAME + '</span>\n' +
     "</a>\n" +
     '<nav class="main-nav" id="mainNav" aria-label="Primary">\n' +
     '<a href="' +
     (mode === "dev" || mode === "portal"
       ? "/"
-      : "https://playportal.example/") +
+      : "https://geometrydashlite.example/") +
     '" class="active">All Games</a>\n' +
     "</nav>\n" +
     '<button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Toggle menu">\n' +
@@ -412,12 +522,7 @@ function renderPage(game, catalog, mode, opts) {
     "</div>\n" +
     "</section>\n" +
     "</main>\n" +
-    '<footer class="site-footer">\n' +
-    '<div class="footer-inner">\n' +
-    '<div class="brand"><span class="brand-mark" aria-hidden="true">▮▮</span><span class="brand-name">PlayPortal</span></div>\n' +
-    '<p class="muted">© <span id="year"></span> PlayPortal. All games belong to their respective creators.</p>\n' +
-    "</div>\n" +
-    "</footer>\n" +
+    renderFooter(assetsBase) +
     '<script src="' +
     assetsBase +
     '/main.js"></script>\n' +
@@ -428,6 +533,8 @@ function renderPage(game, catalog, mode, opts) {
 
 module.exports = {
   renderPage: renderPage,
+  renderLegalPage: renderLegalPage,
+  legalPages: legal.pages,
   gameUrl: gameUrl,
   embedSrc: embedSrc,
 };

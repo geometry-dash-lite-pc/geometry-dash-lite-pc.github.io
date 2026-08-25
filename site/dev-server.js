@@ -21,7 +21,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const { renderPage } = require("./lib/render");
+const { renderPage, renderLegalPage, legalPages } = require("./lib/render");
 
 const ROOT = path.join(__dirname, "..");
 const PORT = Number(process.argv[2]) || 3000;
@@ -115,9 +115,22 @@ const server = http.createServer((req, res) => {
       if (!imagePath.startsWith(path.join(__dirname, "images", "games"))) return send(res, 403, "Forbidden");
       return serveFile(res, imagePath);
     }
+    if (parts.length === 2 && parts[1].endsWith(".html")) {
+      const slug = parts[1].slice(0, -".html".length);
+      const pageDef = legalPages.find((p) => p.slug === slug);
+      if (pageDef) {
+        const html = renderLegalPage(pageDef, games, "dev");
+        return send(res, 200, html, { "Content-Type": "text/html; charset=utf-8" });
+      }
+    }
     const ASSET_FILES = {
       "style.css": "css/style.css",
-      "main.js": "js/main.js"
+      "main.js": "js/main.js",
+      "logo.png": "images/logo.png",
+      "favicon.ico": "images/favicon/favicon.ico",
+      "favicon-16x16.png": "images/favicon/favicon-16x16.png",
+      "favicon-32x32.png": "images/favicon/favicon-32x32.png",
+      "favicon-apple-touch.png": "images/favicon/favicon-apple-touch.png"
     };
     const relPath = ASSET_FILES[parts[1]];
     if (!relPath) return send(res, 404, "Unknown asset: " + parts[1]);
