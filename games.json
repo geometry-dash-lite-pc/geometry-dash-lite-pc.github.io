@@ -734,5 +734,58 @@
         "a": "Practice difficult sections, learn the timing of obstacles, and use repeated attempts to memorize the level layout."
       }
     ]
+  },
+  {
+    "slug": "hyper-wave-trial",
+    "title": "Hyper Wave Trial",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Wave", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://lolygames.github.io/hyper-wave-trial/",
+    "domain": "",
+    "colors": {
+      "accent": "#06b6d4",
+      "accent2": "#8b5cf6"
+    },
+    "cardGradient": ["#0891b2", "#7c3aed"],
+    "initial": "HWT",
+    "image": "hyper-wave-trial.jpg",
+    "seo": {
+      "metaDescription": "Play Hyper Wave Trial online for free. Control the wave, avoid obstacles, and test your reflexes in this challenging rhythm-based platform game.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.4,
+      "count": 0
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Hyper Wave Trial is a fast-paced wave-based platform challenge focused on precision, timing, and quick reactions. Control the wave through challenging sections, avoid obstacles, and try to reach the end without crashing.",
+    "howto": [
+      "Left Click / Tap / Space: Control the wave.",
+      "Hold to move upward and release to move downward.",
+      "Avoid spikes, walls, and other obstacles.",
+      "Keep your movements precise through narrow sections.",
+      "Practice difficult sections to improve your timing and reach the finish."
+    ],
+    "faq": [
+      {
+        "q": "Is Hyper Wave Trial free to play?",
+        "a": "Yes — Hyper Wave Trial can be played directly in your browser for free."
+      },
+      {
+        "q": "Can I play Hyper Wave Trial on mobile?",
+        "a": "Yes. The game can be played with touch controls on supported mobile devices."
+      },
+      {
+        "q": "What are the controls for Hyper Wave Trial?",
+        "a": "Use the left mouse button, tap the screen, or press Space to control the wave."
+      },
+      {
+        "q": "How do I play Hyper Wave Trial?",
+        "a": "Control the wave through narrow paths, avoid obstacles, and use precise movements to reach the end of the level."
+      }
+    ]
   }
 ]
