@@ -579,5 +579,160 @@
         "a": "Practice each section, learn the timing of obstacles, and focus on maintaining consistent jumps rather than rushing through difficult sections."
       }
     ]
+  },
+  {
+    "slug": "geometry-dash-world",
+    "title": "Geometry Dash World",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Jumping", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://lolygames.github.io/gd-world/",
+    "domain": "",
+    "colors": {
+      "accent": "#22c55e",
+      "accent2": "#06b6d4"
+    },
+    "cardGradient": ["#16a34a", "#0891b2"],
+    "initial": "GDW",
+    "image": "geometry-dash-world.jpg",
+    "seo": {
+      "metaDescription": "Play Geometry Dash World online for free. Jump, fly, and navigate challenging rhythm-based levels filled with obstacles and fast-paced action.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.5,
+      "count": 0
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Dash World is a fast-paced rhythm platformer where you control your character through challenging levels filled with spikes, obstacles, jumps, and precise timing sections.",
+    "howto": [
+      "Left Click / Tap / Space: Jump or control your character.",
+      "Avoid spikes and obstacles throughout each level.",
+      "Time your jumps carefully to match the level.",
+      "Learn obstacle patterns and improve through repeated attempts.",
+      "Reach the end of each level without crashing."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash World free to play?",
+        "a": "Yes — Geometry Dash World can be played directly in your browser for free."
+      },
+      {
+        "q": "Can I play Geometry Dash World on mobile?",
+        "a": "Yes. The game supports touch controls on supported mobile devices."
+      },
+      {
+        "q": "What are the controls for Geometry Dash World?",
+        "a": "Use the mouse, tap the screen, or press Space to control your character."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-portal-challenge",
+    "title": "Geometry Portal Challenge",
+    "genre": "Platform",
+    "tags": ["Platform", "Puzzle", "Rhythm", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://lolygames.github.io/geometry-portal-challenge/",
+    "domain": "",
+    "colors": {
+      "accent": "#06b6d4",
+      "accent2": "#8b5cf6"
+    },
+    "cardGradient": ["#0891b2", "#7c3aed"],
+    "initial": "GPC",
+    "image": "geometry-portal-challenge.jpg",
+    "seo": {
+      "metaDescription": "Play Geometry Portal Challenge online for free. Navigate challenging levels, use portals, avoid obstacles, and test your timing and reflexes.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.4,
+      "count": 0
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Portal Challenge is a fast-paced platform game featuring challenging levels, portals, obstacles, and precise timing. Navigate through dangerous sections, use portals to progress, and reach the end of each challenge without crashing.",
+    "howto": [
+      "Left Click / Tap / Space: Jump or control your character.",
+      "Enter portals to navigate through different sections of the level.",
+      "Avoid spikes, obstacles, and other hazards.",
+      "Time your movements carefully to pass difficult sections.",
+      "Reach the end of the challenge without crashing."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Portal Challenge free to play?",
+        "a": "Yes — Geometry Portal Challenge can be played directly in your browser for free."
+      },
+      {
+        "q": "Can I play Geometry Portal Challenge on mobile?",
+        "a": "Yes. The game supports touch controls on supported mobile devices."
+      },
+      {
+        "q": "What are the controls for Geometry Portal Challenge?",
+        "a": "Use the left mouse button, tap the screen, or press Space to control your character."
+      },
+      {
+        "q": "How do I play Geometry Portal Challenge?",
+        "a": "Navigate through the level, use portals at the correct time, avoid obstacles, and reach the finish."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-dash-monster-vibes",
+    "title": "Geometry Dash Monster Vibes",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Jumping", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://lolygames.github.io/gd-monster-vibes/",
+    "domain": "",
+    "colors": {
+      "accent": "#8b5cf6",
+      "accent2": "#ec4899"
+    },
+    "cardGradient": ["#7c3aed", "#db2777"],
+    "initial": "GDM",
+    "image": "geometry-dash-monster-vibes.jpg",
+    "seo": {
+      "metaDescription": "Play Geometry Dash Monster Vibes online for free. Jump, dodge obstacles, and master challenging rhythm-based platforming levels.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.4,
+      "count": 0
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Dash Monster Vibes is a fast-paced rhythm platformer where you must navigate challenging levels filled with spikes, obstacles, jumps, and precise timing sections. Stay focused, follow the rhythm, and avoid crashing as you make your way through the level.",
+    "howto": [
+      "Left Click / Tap / Space: Jump or control your character.",
+      "Avoid spikes, obstacles, and other hazards.",
+      "Time your jumps carefully to pass difficult sections.",
+      "Learn the level layout through repeated attempts.",
+      "Reach the end of the level without crashing."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash Monster Vibes free to play?",
+        "a": "Yes — Geometry Dash Monster Vibes can be played directly in your browser for free."
+      },
+      {
+        "q": "Can I play Geometry Dash Monster Vibes on mobile?",
+        "a": "Yes. The game can be played with touch controls on supported mobile devices."
+      },
+      {
+        "q": "What are the controls for Geometry Dash Monster Vibes?",
+        "a": "Use the left mouse button, tap the screen, or press Space to control your character."
+      },
+      {
+        "q": "How do I get better at Geometry Dash Monster Vibes?",
+        "a": "Practice difficult sections, learn the timing of obstacles, and use repeated attempts to memorize the level layout."
+      }
+    ]
   }
 ]
