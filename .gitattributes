@@ -1,0 +1,10 @@
+# Game folders contain custom binary-ish data formats (Run 3's level/terrain
+# data in particular is a dense custom encoding, not plain text) that must
+# never be touched by git's line-ending normalization. Without this, Windows
+# git (core.autocrlf=true) silently converts CRLF -> LF while staging files,
+# which corrupted Run3Source's text/*.txt level data (confirmed: every line
+# lost exactly 1 byte, matching the file's line count exactly) and caused
+# the compiled game to crash with "An unknown error occurred."
+Run3Source/** -text
+2048/** -text
+AlienShooter/** -text

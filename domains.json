@@ -1,0 +1,10 @@
+[
+  {
+    "domain": "your-geometrydash-domain.com",
+    "mainGame": "geometry-dash-lite"
+  },
+  {
+    "domain": "your-run3-domain.com",
+    "mainGame": "run3"
+  }
+]

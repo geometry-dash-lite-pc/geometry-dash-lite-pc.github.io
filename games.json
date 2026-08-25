@@ -1,0 +1,718 @@
+[
+  {
+    "slug": "2048",
+    "title": "2048",
+    "genre": "Puzzle",
+    "tags": ["Puzzle", "Single Player"],
+    "gameDir": "2048",
+    "indexFile": "index.html",
+    "domain": "",
+    "colors": {
+      "accent": "#f2a154",
+      "accent2": "#f76b6b"
+    },
+    "cardGradient": ["#f2b179", "#f59563"],
+    "initial": "2048",
+    "seo": {
+      "metaDescription": "Play 2048 free online, no download required. Slide tiles, combine numbers, chase the 2048 tile. Works on desktop and mobile.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.6,
+      "count": 2140
+    },
+    "released": 2014,
+    "controls": "Arrow keys / Swipe",
+    "about": "2048 is a single-player sliding tile puzzle game. Use your arrow keys (or swipe on mobile) to move all tiles on the board. When two tiles with the same number touch, they merge into one — double the value. Reach the 2048 tile to win, or keep going for a new high score.",
+    "howto": [
+      "Use the arrow keys (or swipe on mobile) to slide every tile in that direction.",
+      "Tiles with the same number merge into one when they collide.",
+      "Every move adds a new tile (2 or 4) to the board.",
+      "The game ends when no more moves are possible — plan ahead!"
+    ],
+    "faq": [
+      {
+        "q": "Is 2048 free to play?",
+        "a": "Yes — 2048 is completely free, runs in your browser, and needs no download or install."
+      },
+      {
+        "q": "Does 2048 work on mobile?",
+        "a": "Yes, swipe gestures are supported on touchscreens in addition to keyboard controls on desktop."
+      },
+      {
+        "q": "Is there a strategy to win?",
+        "a": "Keep your highest tile in a corner and build outward, avoiding moves that scatter your large tiles across the board."
+      }
+    ]
+  },
+  {
+    "slug": "run3",
+    "title": "Run 3 Cyberpunk",
+    "genre": "Runner",
+    "tags": ["Runner", "Arcade", "Single Player"],
+    "gameDir": "Run3Source",
+    "indexFile": "index.html",
+    "domain": "",
+    "colors": {
+      "accent": "#6c5ce7",
+      "accent2": "#00e5c9"
+    },
+    "cardGradient": ["#1f2a52", "#3a2a6e"],
+    "initial": "R3C",
+    "seo": {
+      "metaDescription": "Play Run 3 Cyberpunk free online, no download required. Run, jump, and rotate the tunnel to survive an endless neon space course. Works on desktop and mobile.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.7,
+      "count": 5310
+    },
+    "released": 2014,
+    "controls": "Arrow keys / WASD",
+    "about": "Run 3 Cyberpunk is an endless runner set in a crumbling neon space tunnel. Sprint, jump, and rotate the whole tunnel around your character to keep the path beneath your feet — one wrong step and you fall into the void. Unlock new characters and explore branching tunnel paths as you go further.",
+    "howto": [
+      "Use the arrow keys (or A/D) to run left and right.",
+      "Press the up arrow (or W) to jump over gaps.",
+      "The tunnel rotates with you — use it to reach platforms that look out of reach.",
+      "Reach the end of a level, or go as far as possible in Infinite Mode."
+    ],
+    "faq": [
+      {
+        "q": "Is Run 3 Cyberpunk free to play?",
+        "a": "Yes — Run 3 Cyberpunk is completely free and runs directly in your browser."
+      },
+      {
+        "q": "Does Run 3 Cyberpunk work on mobile?",
+        "a": "Run 3 Cyberpunk plays best with a keyboard; touch controls may be limited depending on your device."
+      },
+      {
+        "q": "What's the difference between Explore and Infinite mode?",
+        "a": "Explore mode has hand-built levels with an end goal, while Infinite mode generates an endless tunnel to survive as long as you can."
+      }
+    ]
+  },
+  {
+    "slug": "alien-shooter",
+    "title": "Alien Shooter",
+    "genre": "Shooter",
+    "tags": ["Shooter", "Arcade", "Single Player"],
+    "gameDir": "AlienShooter",
+    "indexFile": "index.html",
+    "domain": "",
+    "colors": {
+      "accent": "#6c3cdc",
+      "accent2": "#40f5dc"
+    },
+    "cardGradient": ["#3a1f6e", "#c23cdc"],
+    "initial": "AS",
+    "seo": {
+      "metaDescription": "Play Alien Shooter free online, no download required. Blast waves of neon aliens before they reach you. Works on desktop and mobile.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.5,
+      "count": 312
+    },
+    "released": 2026,
+    "controls": "Arrow keys + Space / Touch",
+    "about": "Alien Shooter is a fast, neon-soaked arcade shooter. Waves of aliens descend in formation, picking up speed the fewer of them remain — blast them all before they break through, chase a high score, and survive as many waves as you can.",
+    "howto": [
+      "Move left/right with the arrow keys (or A/D), or drag on touch devices.",
+      "Hold Space, click, or hold your finger down to fire.",
+      "Aliens speed up as their formation thins out — clear a wave fast before it gets hectic.",
+      "You have 3 lives — losing them all ends the run. Beat your best score!"
+    ],
+    "faq": [
+      {
+        "q": "Is Alien Shooter free to play?",
+        "a": "Yes — completely free, runs in your browser, no download or install needed."
+      },
+      {
+        "q": "Does it work on mobile?",
+        "a": "Yes — drag to move and hold to fire on touchscreens."
+      },
+      {
+        "q": "Does the game get harder?",
+        "a": "Each wave adds more aliens and speed, and a thinning formation accelerates — it's designed to keep ramping up."
+      }
+    ]
+  },
+  {
+    "slug": "magictilesonline",
+    "title": "Magic Tiles Online",
+    "genre": "Music",
+    "tags": ["Music", "Rhythm", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://html5.gamedistribution.com/58deefb8f63943dcbc5093070b9b5777/",
+    "embedReferrerParam": "gd_sdk_referrer_url",
+    "orientation": "portrait",
+    "domain": "",
+    "colors": {
+      "accent": "#a855f7",
+      "accent2": "#22d3ee"
+    },
+    "cardGradient": ["#7c3aed", "#ec4899"],
+    "initial": "MT",
+    "seo": {
+      "metaDescription": "Play Magic Tiles Online free in your browser. Tap the black tiles in time with the music across four lanes, chase combos, and climb the score board. No download needed.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.4,
+      "count": 3820
+    },
+    "released": 2017,
+    "controls": "Mouse / Tap",
+    "about": "Magic Tiles Online is a rhythm game built around a simple rule: hit the black tiles, never the white ones. Four lanes of tiles scroll down in time with the track, and your job is to keep up as the tempo climbs. Long tiles need to be held, doubles need two fingers at once, and a single missed tap ends the run — so accuracy matters far more than speed.",
+    "howto": [
+      "Tap or click a black tile as it reaches the strike line at the bottom.",
+      "Hold your press down for the long tiles instead of tapping once.",
+      "Double tiles arrive side by side — hit both lanes at the same moment.",
+      "Never touch a white tile, and never let a black one slip past: either one ends the song.",
+      "Chain clean hits to build your combo multiplier and push the score higher."
+    ],
+    "faq": [
+      {
+        "q": "Is Magic Tiles Online free to play?",
+        "a": "Yes — it runs directly in your browser with no download, install, or account required."
+      },
+      {
+        "q": "Does Magic Tiles Online work on mobile?",
+        "a": "Yes. The game is built portrait-first for touchscreens, so tapping lanes on a phone or tablet works just as well as clicking on desktop."
+      },
+      {
+        "q": "How do I score higher?",
+        "a": "Keep your combo alive. Consecutive accurate hits raise your multiplier, so a steady clean run beats a fast one broken up by misses."
+      }
+    ]
+  },
+  {
+    "slug": "color-rush",
+    "title": "Color Rush",
+    "genre": "Running",
+    "tags": ["Running", "Skill", "Platform", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://game.azgame.io/color-rush/",
+    "domain": "",
+    "colors": {
+      "accent": "#fb7185",
+      "accent2": "#fbbf24"
+    },
+    "cardGradient": ["#e11d48", "#f59e0b"],
+    "initial": "CR",
+    "image": "color-rush.jpg",
+    "seo": {
+      "metaDescription": "Color Rush is a hyper-speed, reflex-driven game that throws you into a spinning tunnel of flashing colors and shifting obstacles.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.5,
+      "count": 1100000
+    },
+    "released": "",
+    "controls": "Mouse / Tap",
+    "about": "Color Rush is a hyper-speed, reflex-driven game that throws you into a spinning tunnel of flashing colors and shifting obstacles. Your job? Match the ball’s color with the barriers ahead — or crash and burn trying! The pace picks up fast, the patterns get wilder, and your brain gets one of the most entertaining workouts ever.",
+    "howto": [
+      "Tap or click to change the color of your ball.",
+      "Match the ball’s color with the rotating obstacles you’re heading toward.",
+      "Miss a match? Game over. Precision is everything.",
+      "React fast, because each second pushes the pace into overdrive."
+    ],
+    "faq": [
+      {
+        "q": "Is Color Rush free to play?",
+        "a": "Yes — Color Rush runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Color Rush work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Color Rush?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "egg-dash",
+    "title": "Egg Dash",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Dash", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://scratch.mit.edu/projects/885508672/embed",
+    "domain": "",
+    "colors": {
+      "accent": "#fcd34d",
+      "accent2": "#fb923c"
+    },
+    "cardGradient": ["#f59e0b", "#f97316"],
+    "initial": "ED",
+    "image": "egg-dash.jpg",
+    "seo": {
+      "metaDescription": "Get ready to scramble through sound and color in Egg Dash — a delightful rhythm-based platformer game. It blends fast-paced gameplay with an egg-ceptionally fun twist",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.3,
+      "count": 1200000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Get ready to scramble through sound and color in Egg Dash — a delightful rhythm-based platformer game. It blends fast-paced gameplay with an egg-ceptionally fun twist. It’s a yolk-fueled adventure that will have you tapping, dodging, and bouncing in perfect sync.",
+    "howto": [
+      "Tap to Jump: One-tap control lets you jump over spikes and onto platforms.",
+      "Time with the Beat: The music isn’t just for vibes — it's your guide.",
+      "Collect Easter Eggs: Each level has 3 hidden collectible Easter Eggs — perfect for explorers and perfectionists!",
+      "Reach the Finish Line: Can you complete each level without cracking under pressure?"
+    ],
+    "faq": [
+      {
+        "q": "Is Egg Dash free to play?",
+        "a": "Yes — Egg Dash runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Egg Dash work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Egg Dash?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-dash-arrow",
+    "title": "Geometry Dash Arrow",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Jumping", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://st.8games.net/7/igra-chjornaya-geometri-volna-super-chellendzh/",
+    "domain": "",
+    "colors": {
+      "accent": "#fbbf24",
+      "accent2": "#f97316"
+    },
+    "cardGradient": ["#d97706", "#ea580c"],
+    "initial": "GDA",
+    "image": "geometry-dash-arrow.jpg",
+    "seo": {
+      "metaDescription": "Inspired by the iconic Geometry Dash and its legendary wave mechanic, Geometry Arrow brings a bold, standalone experience that’s just as punishing — and even more hypnotizing",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.4,
+      "count": 1150000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Inspired by the iconic Geometry Dash and its legendary wave mechanic, Geometry Arrow brings a bold, standalone experience that’s just as punishing — and even more hypnotizing. At its core, Geometry Arrow is a rhythm-driven, wave-mode platformer where you control a sleek, sharp arrow icon flying through deadly mazes. The twist? You don’t just jump — you ride the wave. Tap to switch direction, hold to soar, and release to dive in a perfectly timed zigzag across increasingly brutal levels.",
+    "howto": [
+      "Left Click / Tap: Hold to fly up, release to fall.",
+      "Navigate through spike pits, floating platforms, rotating blades, and disorienting visuals.",
+      "Zigzag with precision — the arrow never stops moving, and neither can your brain.",
+      "Survive six levels of escalating difficulty, from mild mayhem to full-on demon-tier insanity."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash Arrow free to play?",
+        "a": "Yes — Geometry Dash Arrow runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Dash Arrow work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Dash Arrow?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-dash-deadlocked",
+    "title": "Geometry Dash Deadlocked",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Dash", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://scratch.mit.edu/projects/382486367/embed",
+    "domain": "",
+    "colors": {
+      "accent": "#f43f5e",
+      "accent2": "#8b5cf6"
+    },
+    "cardGradient": ["#e11d48", "#7c3aed"],
+    "initial": "GDD",
+    "image": "geometry-dash-deadlocked.jpg",
+    "seo": {
+      "metaDescription": "If you've been blazing through Geometry Dash’s earlier levels and feel like you're ready for a real challenge, it's time to face the beast: Geometry Dash Deadlocked.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.6,
+      "count": 1300000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "If you've been blazing through Geometry Dash’s earlier levels and feel like you're ready for a real challenge, it's time to face the beast: Geometry Dash Deadlocked. It's one of the most intense and rewarding levels in the original game. The game throws everything at you—teleportation portals, gravity flips, laser-blasting monsters, and a soundtrack that perfectly mirrors the madness.",
+    "howto": [
+      "Cube Mode: Start with gravity shifts, tight jumps, and layered obstacles.",
+      "Wave Mode: Ride zig-zag waves through razor-thin passages with laser attacks threatening to end your run instantly.",
+      "Robot Mode: Jump higher or shorter depending on how long you hold—perfect control is essential.",
+      "Teleportation Chaos: Sudden warps and orientation shifts mean muscle memory alone won’t carry you; you’ll need pure focus."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash Deadlocked free to play?",
+        "a": "Yes — Geometry Dash Deadlocked runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Dash Deadlocked work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Dash Deadlocked?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-dash-lite-2",
+    "title": "Geometry Dash Lite 2",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Dash", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://scratch.mit.edu/projects/944436399/embed",
+    "domain": "",
+    "colors": {
+      "accent": "#a3e635",
+      "accent2": "#22d3ee"
+    },
+    "cardGradient": ["#65a30d", "#0891b2"],
+    "initial": "GD2",
+    "image": "geometry-dash-lite-2.png",
+    "seo": {
+      "metaDescription": "Geometry Dash Lite 2 is an action-packed sequel that turns up the tempo, the intensity, and the insanity as players dance through spikes, flip over traps, and ride the rhythm through chaos.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.5,
+      "count": 1350000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Dash Lite 2 is an action-packed sequel that turns up the tempo, the intensity, and the insanity as players dance through spikes, flip over traps, and ride the rhythm through chaos. Geometry Dash Lite 2 is a rhythm-based platformer where you guide your ever-moving icon through levels filled with deadly obstacles — all perfectly synced to heart-pounding soundtracks. Every tap is a jump. Every jump must be precise. And every level is a beautifully designed rhythm maze that punishes hesitation and rewards perfection.",
+    "howto": [
+      "Press Play to load Geometry Dash Lite 2, then take control with a single input — click, tap, or the Space bar.",
+      "Read the layout coming toward you and commit to your timing early instead of reacting late.",
+      "One mistake ends the attempt and sends you back to the start, so consistency beats speed.",
+      "Repeat the opening stretch until it feels automatic, then push a little further each run."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash Lite 2 free to play?",
+        "a": "Yes — Geometry Dash Lite 2 runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Dash Lite 2 work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Dash Lite 2?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-dash-meltdown",
+    "title": "Geometry Dash Meltdown",
+    "genre": "Dash",
+    "tags": ["Dash", "Rhythm", "Platform", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://lolygames.github.io/gd-melt/",
+    "domain": "",
+    "colors": {
+      "accent": "#f97316",
+      "accent2": "#ef4444"
+    },
+    "cardGradient": ["#ea580c", "#dc2626"],
+    "initial": "GDM",
+    "image": "geometry-dash-meltdown.jpg",
+    "seo": {
+      "metaDescription": "Geometry Dash Meltdown is a rhythm-based platformer game that brings a nice spin-off of the legendary Geometry Dash series.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.6,
+      "count": 1210000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Dash Meltdown is a rhythm-based platformer game that brings a nice spin-off of the legendary Geometry Dash series. It sharpens the spikes and throws players into three of the most electrifying levels ever created. Geometry Dash Meltdown is a single-button rhythm platformer where you guide a cube through spike-laced landscapes, bouncing to the beat of high-energy tracks by F-777. Every level is synced with music. Hence, your jumps, flips, and mid-air transformations need to flow with the rhythm — or you’ll crash, explode, and restart… a lot.",
+    "howto": [
+      "Tap to Jump: One tap is all it takes — but timing is everything.",
+      "Avoid Obstacles: Spikes, fireballs, saws, and moving walls want to end your run.",
+      "Ride the Rhythm: Let the beat guide your jumps. Music = survival.",
+      "Unlock Icons: Customize your cube as you progress and prove your skill."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash Meltdown free to play?",
+        "a": "Yes — Geometry Dash Meltdown runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Dash Meltdown work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Dash Meltdown?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-dash",
+    "title": "Geometry Dash",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Dash", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://lolygames.github.io/geometry-dash/",
+    "domain": "",
+    "colors": {
+      "accent": "#38bdf8",
+      "accent2": "#22d3ee"
+    },
+    "cardGradient": ["#0284c7", "#06b6d4"],
+    "initial": "GD",
+    "image": "geometry-dash.jpg",
+    "seo": {
+      "metaDescription": "Geometry Dash is a rhythm-based platformer game that brings a full-blown test of timing, focus, and muscle memory to players.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.5,
+      "count": 1280000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Dash is a rhythm-based platformer game that brings a full-blown test of timing, focus, and muscle memory to players. Loved by millions around the world, Geometry Dash is simple to learn, impossible to master, and endlessly addictive. Geometry Dash is a high-speed, one-touch rhythm platformer where you control a cube (or other unlockable icons) through levels filled with deadly traps, spinning saws, spike pits, and gravity-shifting portals — all perfectly synced to explosive electronic music tracks.",
+    "howto": [
+      "Tap to jump or fly — depending on your form.",
+      "Avoid obstacles — miss a single jump, and it’s game over.",
+      "Ride the rhythm — the music isn’t just background; it’s your guide.",
+      "Unlock new icons and colors — customize your cube as you progress.",
+      "Practice Mode — place checkpoints to learn tough parts before making the full run"
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash free to play?",
+        "a": "Yes — Geometry Dash runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Dash work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Dash?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-rash",
+    "title": "Geometry Rash",
+    "genre": "Rhythm",
+    "tags": ["Rhythm", "Skill", "Platform", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://previews.envatousercontent.com/files/223637350/index.html",
+    "domain": "",
+    "colors": {
+      "accent": "#c084fc",
+      "accent2": "#f472b6"
+    },
+    "cardGradient": ["#9333ea", "#db2777"],
+    "initial": "GR",
+    "image": "geometry-rash.png",
+    "seo": {
+      "metaDescription": "Geometry Rash is an arcade platformer game that challenges your reflexes and timing. Keep your eyes wide and your fingers quick!",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.3,
+      "count": 1200000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Rash is an arcade platformer game that challenges your reflexes and timing. Keep your eyes wide and your fingers quick! Developed by Vi Games and released on December 4, 2019, this game delivers a thrilling experience packed into 15 creatively designed levels.",
+    "howto": [
+      "Controls: Just use your mouse — click anywhere on the screen to make your square jump.",
+      "Objective: Complete all 15 levels by avoiding spikes and jumping on platforms.",
+      "Tips: The game gets trickier as you go. Timing is everything, so keep your focus and don’t let the smooth beats distract you!"
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Rash free to play?",
+        "a": "Yes — Geometry Rash runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Rash work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Rash?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-vibes-x-ball",
+    "title": "Geometry Vibes X-Ball",
+    "genre": "Dash",
+    "tags": ["Dash", "Skill", "Platform", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://files.twoplayergames.org/files/games/g1/geometry-vibes-x-ball/index.html",
+    "domain": "",
+    "colors": {
+      "accent": "#2dd4bf",
+      "accent2": "#818cf8"
+    },
+    "cardGradient": ["#0d9488", "#4f46e5"],
+    "initial": "GVX",
+    "image": "geometry-vibes-x-ball.jpg",
+    "seo": {
+      "metaDescription": "Geometry Vibes X-Ball brings geometric chaos and rhythm-fueled action gameplay to players. Join a wild wave-riding mechanic that will push your skills to the edge!",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.4,
+      "count": 1400000
+    },
+    "released": "",
+    "controls": "Mouse / Tap",
+    "about": "Geometry Vibes X-Ball brings geometric chaos and rhythm-fueled action gameplay to players. Join a wild wave-riding mechanic that will push your skills to the edge! Developed for all kinds of players — from casuals to seasoned veterans — the game blends intuitive controls with fast-paced challenges and stunning visuals. Whether you’re solo grinding or competing with friends, this game keeps your pulse racing with every tap.",
+    "howto": [
+      "Stay Controlled: Gentle taps = better control. Avoid wild swings up and down — balance is key.",
+      "Mind the Edges: Don’t hug the top or bottom of the screen — danger always lurks there.",
+      "Master the Wave: Your ball moves in wave patterns. Learn the angles, adjust your tap timing, and anticipate traps.",
+      "Don’t Panic: Mistakes happen — use every fail as a learning moment to come back stronger.",
+      "Practice Patience: Especially in Challenge Mode, persistence is what separates rookies from legends."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Vibes X-Ball free to play?",
+        "a": "Yes — Geometry Vibes X-Ball runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Vibes X-Ball work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Vibes X-Ball?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "golf-hit",
+    "title": "Golf Hit",
+    "genre": "Golf",
+    "tags": ["Golf", "Sports", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://game.azgame.io/golf-hit/",
+    "domain": "",
+    "colors": {
+      "accent": "#4ade80",
+      "accent2": "#facc15"
+    },
+    "cardGradient": ["#16a34a", "#ca8a04"],
+    "initial": "GH",
+    "image": "golf-hit.jpg",
+    "seo": {
+      "metaDescription": "Golf Hit is a golf game that features fast-paced, bounce-crazy, power-packed gameplay. It takes everything you know about putting and swinging… and sends it straight into outer space.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.5,
+      "count": 1320000
+    },
+    "released": "",
+    "controls": "Mouse / Tap",
+    "about": "Golf Hit is a golf game that features fast-paced, bounce-crazy, power-packed gameplay. It takes everything you know about putting and swinging… and sends it straight into outer space! In Golf Hit, the rules are simple: swing your club and hit the ball as far as humanly (or inhumanly) possible. Each round is an explosive combination of perfect timing, bounce physics, and clever upgrades.",
+    "howto": [
+      "Tap to swing — Follow the arrow and time your shot just right.",
+      "Watch it fly — Your ball bounces off walls, hills, and obstacles, collecting coins as it builds momentum.",
+      "Unlock epic upgrades — The farther you go, the more power-ups and characters you unlock."
+    ],
+    "faq": [
+      {
+        "q": "Is Golf Hit free to play?",
+        "a": "Yes — Golf Hit runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Golf Hit work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Golf Hit?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  },
+  {
+    "slug": "geometry-dash-lite",
+    "title": "Geometry Dash Lite",
+    "genre": "Platform",
+    "tags": ["Platform", "Rhythm", "Jumping", "Single Player"],
+    "gameDir": "",
+    "indexFile": "",
+    "embedUrl": "https://geometrydash-pc.com/play/gdlite/",
+    "domain": "",
+    "colors": {
+      "accent": "#00e0ff",
+      "accent2": "#7c5cff"
+    },
+    "cardGradient": ["#0ea5e9", "#6366f1"],
+    "initial": "GDL",
+    "image": "geometry-dash-lite.png",
+    "seo": {
+      "metaDescription": "Geometry Dash Lite is a rhythm-based platformer game that brings non-stop action to push your reflexes to the limit. Jump into the danger-filled levels and conquer them.",
+      "ogImage": ""
+    },
+    "rating": {
+      "value": 4.7,
+      "count": 1500000
+    },
+    "released": "",
+    "controls": "Mouse / Tap / Space",
+    "about": "Geometry Dash Lite is a rhythm-based platformer game that brings non-stop action to push your reflexes to the limit. Jump into the danger-filled levels and conquer them! Craving a real test of your quick reflexes? Geometry Dash Lite brings non-stop action that pushes your reflexes, timing, and patience to the limit. Jump into the danger-filled levels, control your character (often a cube) to navigate all hazards, and finish the courses within the fewest attempts!",
+    "howto": [
+      "Click or tap to jump or fly over the obstacles",
+      "Timing and precision are everything",
+      "Be ready to fail a lot — You will fail a lot! It will take tons of attempts to complete the levels of this game. Don’t get frustrated; try again, and more practice will help you progress.",
+      "Game controls — On PC: Left mouse click or press the up arrow key to jump."
+    ],
+    "faq": [
+      {
+        "q": "Is Geometry Dash Lite free to play?",
+        "a": "Yes — Geometry Dash Lite runs in your browser for free, with no download, install, or account needed."
+      },
+      {
+        "q": "Does Geometry Dash Lite work on mobile?",
+        "a": "Yes. The game responds to taps as well as mouse clicks, so it plays on phones and tablets as well as desktop."
+      },
+      {
+        "q": "How do I get better at Geometry Dash Lite?",
+        "a": "Learn the layout rather than reacting to it. Replaying the same opening section until the timing is automatic is what moves your best run forward."
+      }
+    ]
+  }
+]

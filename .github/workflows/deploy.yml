@@ -1,0 +1,66 @@
+# Builds the portal and publishes it to GitHub Pages.
+#
+# This file is IDENTICAL in every game repo — nothing in it needs editing
+# per repo. Which game lands on "/" is worked out at build time by
+# site/build.js --auto, which prefers, in order:
+#
+#   1. the MAIN_GAME env var (set it below, or via the manual-run input)
+#   2. a main-game.txt file at the repo root
+#   3. the repository name — "2048.github.io" -> 2048, "run3.github.io" -> run3
+#
+# So for a repo named <slug>.github.io you can push this as-is and the right
+# game opens at the root, with every other game at /<other-slug>/.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+    inputs:
+      main_game:
+        description: "Slug to serve at / (leave blank to auto-detect from the repo name)"
+        required: false
+        default: ""
+
+# let the deploy job publish to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# never let two deploys race; don't cancel one that's mid-publish
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build site
+        env:
+          MAIN_GAME: ${{ github.event.inputs.main_game }}
+        run: node site/build.js --auto
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

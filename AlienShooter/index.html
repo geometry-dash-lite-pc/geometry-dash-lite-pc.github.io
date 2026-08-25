@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Alien Shooter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="hud">
+    <div class="hud-item">SCORE <span id="score">0</span></div>
+    <div class="hud-item">BEST <span id="best">0</span></div>
+    <div class="hud-item" id="livesWrap">LIVES <span id="lives">3</span></div>
+  </div>
+
+  <div id="overlay" class="overlay">
+    <h1>ALIEN SHOOTER</h1>
+    <p>Move: <kbd>&larr;</kbd> <kbd>&rarr;</kbd> or drag &nbsp;&middot;&nbsp; Shoot: <kbd>Space</kbd> or tap</p>
+    <button id="startBtn" class="btn">Start</button>
+  </div>
+
+  <script src="js/game.js"></script>
+</body>
+</html>
