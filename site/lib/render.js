@@ -197,8 +197,8 @@ function renderFooter(assetsBase, mode, depth) {
       .join("") +
     "</ul>\n" +
     "</div>\n" +
-    '<p class="muted footer-copy">© <span id="year"></span> ' + SITE_NAME + '. All games belong to their respective creators.</p>\n' +
     "</div>\n" +
+    '<p class="muted footer-copy">© <span id="year"></span> ' + SITE_NAME + '. All games belong to their respective creators.</p>\n' +
     "</footer>\n"
   );
 }
@@ -235,7 +235,7 @@ function renderLegalPage(pageDef, catalog, mode, opts) {
     '<header class="site-header" id="siteHeader">\n' +
     '<div class="header-inner">\n' +
     '<a class="brand" href="' + homeHref + '">\n' +
-    '<img class="brand-logo" src="' + assetsBase + '/logo.png" alt="" width="34" height="34">\n' +
+    '<img class="brand-logo" src="' + assetsBase + '/favicon-32x32.png" alt="" width="34" height="34">\n' +
     '<span class="brand-name">' + SITE_NAME + '</span>\n' +
     "</a>\n" +
     '<nav class="main-nav" id="mainNav" aria-label="Primary">\n' +
@@ -388,7 +388,7 @@ function renderPage(game, catalog, mode, opts) {
       ? "/"
       : "https://geometrydashlite.example/") +
     '">\n' +
-    '<img class="brand-logo" src="' + assetsBase + '/logo.png" alt="" width="34" height="34">\n' +
+    '<img class="brand-logo" src="' + assetsBase + '/favicon-32x32.png" alt="" width="34" height="34">\n' +
     '<span class="brand-name">' + SITE_NAME + '</span>\n' +
     "</a>\n" +
     '<nav class="main-nav" id="mainNav" aria-label="Primary">\n' +
