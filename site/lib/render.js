@@ -617,10 +617,48 @@ function renderPage(game, catalog, mode, opts) {
   );
 }
 
+// GitHub Pages serves this file for any URL that doesn't exist on the
+// domain — used to send old/removed paths (like a since-deleted
+// "/<slug>/" subfolder for the root game) back to the working site.
+// Self-contained and domain-root-relative on purpose: a 404 can be hit
+// from any depth, so it never assumes it's sitting next to real assets.
+function renderNotFoundPage() {
+  return (
+    "<!DOCTYPE html>\n" +
+    '<html lang="en">\n' +
+    "<head>\n" +
+    '<meta charset="UTF-8">\n' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+    "<title>Page Not Found | " + SITE_NAME + "</title>\n" +
+    '<meta name="robots" content="noindex,follow">\n' +
+    '<meta http-equiv="refresh" content="0; url=/">\n' +
+    '<script>location.replace("/");</script>\n' +
+    '<style>\n' +
+    "  html{ color-scheme: dark light; }\n" +
+    "  body{\n" +
+    "    margin: 0; min-height: 100vh; display: flex; flex-direction: column;\n" +
+    "    align-items: center; justify-content: center; text-align: center; gap: 14px; padding: 24px;\n" +
+    "    background: #0b0d14; color: #fff;\n" +
+    "    font-family: \"Inter\", system-ui, -apple-system, sans-serif;\n" +
+    "  }\n" +
+    "  h1{ font-family: \"Space Grotesk\", \"Inter\", system-ui, sans-serif; font-size: 1.6rem; margin: 0; }\n" +
+    "  p{ margin: 0; color: #9aa1b8; }\n" +
+    "  a{ color: #6c5ce7; }\n" +
+    "</style>\n" +
+    "</head>\n" +
+    "<body>\n" +
+    "<h1>Redirecting…</h1>\n" +
+    '<p>This page has moved. Taking you to <a href="/">' + SITE_NAME + "</a>.</p>\n" +
+    "</body>\n" +
+    "</html>\n"
+  );
+}
+
 module.exports = {
   renderPage: renderPage,
   renderLegalPage: renderLegalPage,
   renderAllGamesPage: renderAllGamesPage,
+  renderNotFoundPage: renderNotFoundPage,
   legalPages: legal.pages,
   gameUrl: gameUrl,
   embedSrc: embedSrc,

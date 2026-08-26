@@ -35,7 +35,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { renderPage, renderLegalPage, renderAllGamesPage, legalPages } = require("./lib/render");
+const { renderPage, renderLegalPage, renderAllGamesPage, renderNotFoundPage, legalPages } = require("./lib/render");
 
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -48,9 +48,13 @@ function listSlugs() {
 }
 
 // Legal pages (about, contact, dmca, ...) are shared, domain-wide content,
-// not per-game. `selfPrefix` lets them reuse an existing subfolder's
-// css/js/logo/favicon instead of duplicating those assets a second time
-// (same trick as the portal root's mirrored index.html).
+// not per-game — written once at the shared domain root (portal mode) or
+// once per standalone site (build mode), never duplicated into a game's
+// own "/<slug>/" subfolder. `selfPrefix`, when given, points them at an
+// existing subfolder's css/js/logo/favicon instead of the local copy —
+// unused by the current callers now that the portal root owns its assets
+// directly, but kept for anything that still wants to reuse a subfolder's
+// files instead of duplicating them.
 function writeLegalPages(outDir, mode, depth, selfPrefix) {
   fs.mkdirSync(outDir, { recursive: true });
   for (const pageDef of legalPages) {
@@ -117,12 +121,13 @@ function writeGameSite(game, outDir, mode, depth, rootSlug) {
   fs.writeFileSync(path.join(outDir, "index.html"), html);
 }
 
-// Builds one full "domain" worth of output: every game gets its own
+// Builds one full "domain" worth of output: every OTHER game gets its own
 // <outDir>/<slug>/ subfolder (so <outDir>/2048/, <outDir>/run3/, ... all
-// work), all cross-linking via relative sibling paths. rootSlug's site is
-// ALSO mirrored at <outDir>'s top level (no duplicated assets — it just
-// references the already-built <outDir>/<rootSlug>/ folder), so "/" opens
-// that game directly.
+// work), all cross-linking via relative sibling paths. rootSlug's game is
+// written directly at <outDir> itself — not mirrored from a "/<rootSlug>/"
+// subfolder, there IS no such subfolder — so the domain root is the only
+// URL that game ever has. Anything still pointing at the old subfolder path
+// (a bookmark, a search result) hits 404.html, which bounces back to "/".
 function buildPortal(rootSlug, outDir) {
   const rootGame = games.find((g) => g.slug === rootSlug);
   if (!rootGame) {
@@ -133,17 +138,23 @@ function buildPortal(rootSlug, outDir) {
   fs.rmSync(outDir, { recursive: true, force: true });
 
   for (const game of games) {
+    if (game.slug === rootSlug) continue;
     writeGameSite(game, path.join(outDir, game.slug), "portal", 1, rootSlug);
   }
 
-  // Legal pages live once at the shared domain root (not duplicated into
-  // every /<slug>/ subfolder) — reuse the root game's already-copied
-  // css/js/logo/favicon via selfPrefix instead of a second copy at outDir.
-  writeLegalPages(outDir, "portal", 0, rootSlug);
-  writeAllGamesPage(outDir, "portal", 0, rootSlug, rootSlug);
+  // The root game is written straight into outDir — its own css/js/logo/
+  // favicon/play files live right here, not reused from a subfolder.
+  writeGameSite(rootGame, outDir, "portal", 0, rootSlug);
 
-  const html = renderPage(rootGame, games, "portal", { depth: 0, selfPrefix: rootSlug, rootSlug });
-  fs.writeFileSync(path.join(outDir, "index.html"), html);
+  // Legal pages + the "All Games" listing live once at the shared domain
+  // root too, alongside the root game's now-local assets.
+  writeLegalPages(outDir, "portal", 0, null);
+  writeAllGamesPage(outDir, "portal", 0, null, rootSlug);
+
+  // GitHub Pages serves this for any unmatched path on the domain —
+  // bounces old/removed URLs (like the former "/<rootSlug>/" subfolder)
+  // back to "/".
+  fs.writeFileSync(path.join(outDir, "404.html"), renderNotFoundPage());
 
   // GitHub Pages pipes everything through Jekyll unless this file exists,
   // and Jekyll silently omits paths it treats as special (anything starting
@@ -163,6 +174,7 @@ function buildStandaloneAll(outDir) {
   for (const game of games) {
     const gameOutDir = path.join(outDir, game.slug);
     writeGameSite(game, gameOutDir, "build", 1);
+    fs.writeFileSync(path.join(gameOutDir, "404.html"), renderNotFoundPage());
     console.log(
       `built ${path.relative(ROOT, gameOutDir)}/ (${game.title}) — deploy this folder to ${game.domain || "its own domain"}`
     );
