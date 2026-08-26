@@ -45,6 +45,160 @@ function escapeHtml(str) {
   });
 }
 
+// Absolute URL for a page/asset path relative to the site root. Everything
+// SEO-facing (canonical, og:url, og:image, sitemap) has to be absolute;
+// `siteUrl` is null when the build doesn't know its own origin (dev server,
+// standalone export without a `domain`), in which case callers omit the tag.
+function absUrl(siteUrl, relPath) {
+  if (!siteUrl) return "";
+  return siteUrl.replace(/\/*$/, "/") + String(relPath || "").replace(/^\/+/, "");
+}
+
+// <head> tags every page type shares: canonical + the four Open Graph
+// properties consumers actually require (type/title/image/url — omitting
+// og:image or og:url makes validators report the whole markup as missing)
+// plus the Twitter equivalents.
+function renderSocialMeta(opts) {
+  var canonical = opts.canonical;
+  var image = opts.image;
+  return (
+    (canonical ? '<link rel="canonical" href="' + escapeHtml(canonical) + '">\n' : "") +
+    '<meta name="robots" content="index,follow">\n' +
+    '<meta property="og:type" content="' + (opts.ogType || "website") + '">\n' +
+    '<meta property="og:site_name" content="' + escapeHtml(SITE_NAME) + '">\n' +
+    '<meta property="og:title" content="' + escapeHtml(opts.title) + '">\n' +
+    '<meta property="og:description" content="' + escapeHtml(opts.description) + '">\n' +
+    (canonical ? '<meta property="og:url" content="' + escapeHtml(canonical) + '">\n' : "") +
+    (image ? '<meta property="og:image" content="' + escapeHtml(image) + '">\n' : "") +
+    (image ? '<meta property="og:image:alt" content="' + escapeHtml(opts.title) + '">\n' : "") +
+    '<meta name="twitter:card" content="' + (image ? "summary_large_image" : "summary") + '">\n' +
+    '<meta name="twitter:title" content="' + escapeHtml(opts.title) + '">\n' +
+    '<meta name="twitter:description" content="' + escapeHtml(opts.description) + '">\n' +
+    (image ? '<meta name="twitter:image" content="' + escapeHtml(image) + '">\n' : "")
+  );
+}
+
+// Search results truncate past ~65 characters, so the brand suffix is only
+// worth its length when it fits and isn't already implied. The main game's
+// own title IS the site name ("Geometry Dash Lite | Geometry Dash Lite"),
+// which is the case that pushed the homepage to 72 characters.
+var TITLE_MAX = 65;
+
+function pageTitle(game) {
+  var base = game.title + " — Play Free Online " + game.genre + " Game";
+  var redundant =
+    SITE_NAME.toLowerCase().indexOf(game.title.toLowerCase()) !== -1 ||
+    game.title.toLowerCase().indexOf(SITE_NAME.toLowerCase()) !== -1;
+  if (!redundant && base.length + SITE_NAME.length + 3 <= TITLE_MAX) {
+    return base + " | " + SITE_NAME;
+  }
+  if (base.length <= TITLE_MAX) return base;
+  var shorter = game.title + " — Play Free Online Game";
+  return shorter.length <= TITLE_MAX ? shorter : game.title + " — Play Online";
+}
+
+// schema.org VideoGame for the page's own game. `aggregateRating` is only
+// valid with at least one actual rating — emitting ratingCount "0" (every
+// game in games.json today) makes Search Console reject the whole block, so
+// it's left out until real counts exist.
+function gameSchema(game, canonical, image) {
+  var schema = {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    name: game.title,
+    description: game.seo.metaDescription,
+    genre: game.genre,
+    applicationCategory: "Game",
+    operatingSystem: "Any (Web Browser)",
+    playMode: "SinglePlayer",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+  };
+  if (canonical) schema.url = canonical;
+  if (image) schema.image = image;
+  if (game.rating && Number(game.rating.count) > 0) {
+    schema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: String(game.rating.value),
+      ratingCount: String(game.rating.count),
+    };
+  }
+  return schema;
+}
+
+// schema.org ItemList for the "All Games" listing, so the catalogue is
+// machine-readable as a list of games rather than an anonymous grid of links.
+function allGamesSchema(catalog, mode, depth, rootSlug, siteUrl) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "All Games on " + SITE_NAME,
+    numberOfItems: catalog.length,
+    itemListElement: catalog.map(function (g, i) {
+      var entry = {
+        "@type": "ListItem",
+        position: i + 1,
+        name: g.title,
+      };
+      if (siteUrl) {
+        entry.url = absUrl(siteUrl, rootSlug && g.slug === rootSlug ? "" : g.slug + "/");
+      }
+      return entry;
+    }),
+  };
+}
+
+// robots.txt — without one, crawlers get a 404 for it and auditing tools
+// flag the site as unconfigured. Points at the sitemap so it's discoverable
+// without submitting it anywhere by hand.
+function renderRobotsTxt(siteUrl) {
+  return (
+    "User-agent: *\n" +
+    "Allow: /\n" +
+    (siteUrl ? "\nSitemap: " + absUrl(siteUrl, "sitemap.xml") + "\n" : "")
+  );
+}
+
+// sitemap.xml over every indexable URL: the root game, each other game's
+// folder, the All Games listing and the legal pages. Game pages carry the
+// higher priority; the boilerplate legal pages the lowest.
+function renderSitemap(catalog, rootSlug, siteUrl) {
+  var today = new Date().toISOString().slice(0, 10);
+  var urls = [{ loc: "", priority: "1.0", changefreq: "weekly" }];
+
+  catalog.forEach(function (g) {
+    if (g.slug === rootSlug) return;
+    urls.push({ loc: g.slug + "/", priority: "0.8", changefreq: "weekly" });
+  });
+
+  urls.push({ loc: "all-games.html", priority: "0.7", changefreq: "weekly" });
+  legal.pages.forEach(function (p) {
+    urls.push({ loc: p.slug + ".html", priority: "0.3", changefreq: "yearly" });
+  });
+
+  return (
+    '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    urls
+      .map(function (u) {
+        return (
+          "  <url>\n" +
+          "    <loc>" + escapeHtml(absUrl(siteUrl, u.loc)) + "</loc>\n" +
+          "    <lastmod>" + today + "</lastmod>\n" +
+          "    <changefreq>" + u.changefreq + "</changefreq>\n" +
+          "    <priority>" + u.priority + "</priority>\n" +
+          "  </url>\n"
+        );
+      })
+      .join("") +
+    "</urlset>\n"
+  );
+}
+
 function renderFaviconLinks(assetsBase) {
   var base = assetsBase + "/favicon";
   return (
@@ -234,7 +388,12 @@ function renderLegalPage(pageDef, catalog, mode, opts) {
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
     "<title>" + escapeHtml(pageDef.title) + " | " + SITE_NAME + "</title>\n" +
     '<meta name="description" content="' + escapeHtml(pageDef.metaDescription) + '">\n' +
-    '<meta name="robots" content="index,follow">\n' +
+    renderSocialMeta({
+      canonical: opts.siteUrl ? absUrl(opts.siteUrl, pageDef.slug + ".html") : "",
+      title: pageDef.title + " | " + SITE_NAME,
+      description: pageDef.metaDescription,
+      image: opts.siteUrl ? absUrl(opts.siteUrl, "logo.png") : "",
+    }) +
     renderFaviconLinks(assetsBase) +
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
@@ -287,6 +446,9 @@ function renderAllGamesPage(catalog, mode, opts) {
         ? selfPrefix.replace(/\/$/, "")
         : ".";
   var homeHref = mode === "dev" || mode === "portal" ? "/" : "https://geometrydashlite.example/";
+  var allGamesDescription =
+    "Browse every free browser game on " + SITE_NAME +
+    " — click any title to play instantly, no downloads required.";
 
   return (
     "<!DOCTYPE html>\n" +
@@ -295,8 +457,16 @@ function renderAllGamesPage(catalog, mode, opts) {
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
     "<title>All Games | " + SITE_NAME + "</title>\n" +
-    '<meta name="description" content="Browse every free browser game on ' + SITE_NAME + ' — click any title to play instantly, no downloads required.">\n' +
-    '<meta name="robots" content="index,follow">\n' +
+    '<meta name="description" content="' + allGamesDescription + '">\n' +
+    renderSocialMeta({
+      canonical: opts.siteUrl ? absUrl(opts.siteUrl, "all-games.html") : "",
+      title: "All Games | " + SITE_NAME,
+      description: allGamesDescription,
+      image: opts.siteUrl ? absUrl(opts.siteUrl, "logo.png") : "",
+    }) +
+    '<script type="application/ld+json">\n' +
+    JSON.stringify(allGamesSchema(catalog, mode, depth, rootSlug, opts.siteUrl)) +
+    "\n</script>\n" +
     renderFaviconLinks(assetsBase) +
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
@@ -386,7 +556,20 @@ function renderPage(game, catalog, mode, opts) {
       : selfPrefix
         ? selfPrefix.replace(/\/$/, "")
         : ".";
-  var canonical = game.domain ? game.domain.replace(/\/$/, "") + "/" : "";
+  // In portal mode the page's own URL is the site origin plus its folder
+  // ("" for the root game, "<slug>/" for the rest). Standalone exports fall
+  // back to the game's own `domain`, which is all they know about themselves.
+  var siteUrl = opts.siteUrl || null;
+  var pagePath = opts.pagePath === undefined ? null : opts.pagePath;
+  var canonical = siteUrl && pagePath !== null
+    ? absUrl(siteUrl, pagePath)
+    : game.domain
+      ? game.domain.replace(/\/$/, "") + "/"
+      : "";
+  var ogImage = canonical
+    ? canonical.replace(/\/$/, "/") + "games/" + (game.image || game.slug + ".png")
+    : "";
+  var title = pageTitle(game);
   var playable = isPlayable(game);
 
   return (
@@ -395,51 +578,18 @@ function renderPage(game, catalog, mode, opts) {
     "<head>\n" +
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
-    "<title>" +
-    escapeHtml(game.title) +
-    " — Play Free Online " +
-    escapeHtml(game.genre) +
-    " Game | " + SITE_NAME + "</title>\n" +
+    "<title>" + escapeHtml(title) + "</title>\n" +
     '<meta name="description" content="' +
     escapeHtml(game.seo.metaDescription) +
     '">\n' +
-    (canonical ? '<link rel="canonical" href="' + canonical + '">\n' : "") +
-    '<meta name="robots" content="index,follow">\n' +
-    '<meta property="og:type" content="website">\n' +
-    '<meta property="og:site_name" content="' + SITE_NAME + '">\n' +
-    '<meta property="og:title" content="' +
-    escapeHtml(game.title) +
-    " — Play Free Online " +
-    escapeHtml(game.genre) +
-    ' Game">\n' +
-    '<meta property="og:description" content="' +
-    escapeHtml(game.seo.metaDescription) +
-    '">\n' +
-    (canonical
-      ? '<meta property="og:url" content="' + canonical + '">\n'
-      : "") +
-    '<meta name="twitter:card" content="summary_large_image">\n' +
-    '<meta name="twitter:title" content="' +
-    escapeHtml(game.title) +
-    '">\n' +
-    '<meta name="twitter:description" content="' +
-    escapeHtml(game.seo.metaDescription) +
-    '">\n' +
-    '<script type="application/ld+json">\n' +
-    JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "VideoGame",
-      name: game.title,
+    renderSocialMeta({
+      canonical: canonical,
+      title: title,
       description: game.seo.metaDescription,
-      genre: game.genre,
-      applicationCategory: "Game",
-      operatingSystem: "Any (Web Browser)",
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: String(game.rating.value),
-        ratingCount: String(game.rating.count),
-      },
+      image: ogImage,
     }) +
+    '<script type="application/ld+json">\n' +
+    JSON.stringify(gameSchema(game, canonical, ogImage)) +
     "\n</script>\n" +
     renderFaviconLinks(assetsBase) +
     '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
@@ -668,6 +818,8 @@ module.exports = {
   renderLegalPage: renderLegalPage,
   renderAllGamesPage: renderAllGamesPage,
   renderNotFoundPage: renderNotFoundPage,
+  renderRobotsTxt: renderRobotsTxt,
+  renderSitemap: renderSitemap,
   legalPages: legal.pages,
   gameUrl: gameUrl,
   embedSrc: embedSrc,

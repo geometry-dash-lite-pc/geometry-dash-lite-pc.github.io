@@ -35,8 +35,17 @@
 
 const fs = require("fs");
 const path = require("path");
-const { renderPage, renderLegalPage, renderAllGamesPage, renderNotFoundPage, legalPages } = require("./lib/render");
+const {
+  renderPage,
+  renderLegalPage,
+  renderAllGamesPage,
+  renderNotFoundPage,
+  renderRobotsTxt,
+  renderSitemap,
+  legalPages,
+} = require("./lib/render");
 const { resolveMainGame } = require("./lib/main-game");
+const { resolveSiteUrl } = require("./lib/site-url");
 
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -56,23 +65,23 @@ function listSlugs() {
 // unused by the current callers now that the portal root owns its assets
 // directly, but kept for anything that still wants to reuse a subfolder's
 // files instead of duplicating them.
-function writeLegalPages(outDir, mode, depth, selfPrefix) {
+function writeLegalPages(outDir, mode, depth, selfPrefix, siteUrl) {
   fs.mkdirSync(outDir, { recursive: true });
   for (const pageDef of legalPages) {
-    const html = renderLegalPage(pageDef, games, mode, { depth, selfPrefix });
+    const html = renderLegalPage(pageDef, games, mode, { depth, selfPrefix, siteUrl });
     fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
   }
 }
 
 // The "All Games" nav button's target — same shared-page placement rules
 // as legal pages (see writeLegalPages above).
-function writeAllGamesPage(outDir, mode, depth, selfPrefix, rootSlug) {
+function writeAllGamesPage(outDir, mode, depth, selfPrefix, rootSlug, siteUrl) {
   fs.mkdirSync(outDir, { recursive: true });
-  const html = renderAllGamesPage(games, mode, { depth, selfPrefix, rootSlug });
+  const html = renderAllGamesPage(games, mode, { depth, selfPrefix, rootSlug, siteUrl });
   fs.writeFileSync(path.join(outDir, "all-games.html"), html);
 }
 
-function writeGameSite(game, outDir, mode, depth, rootSlug) {
+function writeGameSite(game, outDir, mode, depth, rootSlug, siteUrl) {
   fs.mkdirSync(outDir, { recursive: true });
 
   fs.copyFileSync(path.join(__dirname, "css", "style.css"), path.join(outDir, "style.css"));
@@ -94,7 +103,7 @@ function writeGameSite(game, outDir, mode, depth, rootSlug) {
       const html = renderLegalPage(pageDef, games, mode, { depth });
       fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
     }
-    writeAllGamesPage(outDir, mode, depth, null, rootSlug);
+    writeAllGamesPage(outDir, mode, depth, null, rootSlug, null);
   }
 
   // copy game images if they exist
@@ -118,7 +127,10 @@ function writeGameSite(game, outDir, mode, depth, rootSlug) {
     });
   }
 
-  const html = renderPage(game, games, mode, { depth, rootSlug });
+  // The page's own path on the shared domain, which canonical/og:url need:
+  // "" for the game sitting at the root, "<slug>/" for every other one.
+  const pagePath = mode === "portal" ? (game.slug === rootSlug ? "" : game.slug + "/") : null;
+  const html = renderPage(game, games, mode, { depth, rootSlug, siteUrl, pagePath });
   fs.writeFileSync(path.join(outDir, "index.html"), html);
 }
 
@@ -129,7 +141,7 @@ function writeGameSite(game, outDir, mode, depth, rootSlug) {
 // subfolder, there IS no such subfolder — so the domain root is the only
 // URL that game ever has. Anything still pointing at the old subfolder path
 // (a bookmark, a search result) hits 404.html, which bounces back to "/".
-function buildPortal(rootSlug, outDir) {
+function buildPortal(rootSlug, outDir, siteUrl) {
   const rootGame = games.find((g) => g.slug === rootSlug);
   if (!rootGame) {
     console.error(`error: "${rootSlug}" is not a slug in games.json. Run with --list to see options.`);
@@ -140,17 +152,26 @@ function buildPortal(rootSlug, outDir) {
 
   for (const game of games) {
     if (game.slug === rootSlug) continue;
-    writeGameSite(game, path.join(outDir, game.slug), "portal", 1, rootSlug);
+    writeGameSite(game, path.join(outDir, game.slug), "portal", 1, rootSlug, siteUrl);
   }
 
   // The root game is written straight into outDir — its own css/js/logo/
   // favicon/play files live right here, not reused from a subfolder.
-  writeGameSite(rootGame, outDir, "portal", 0, rootSlug);
+  writeGameSite(rootGame, outDir, "portal", 0, rootSlug, siteUrl);
 
   // Legal pages + the "All Games" listing live once at the shared domain
   // root too, alongside the root game's now-local assets.
-  writeLegalPages(outDir, "portal", 0, null);
-  writeAllGamesPage(outDir, "portal", 0, null, rootSlug);
+  writeLegalPages(outDir, "portal", 0, null, siteUrl);
+  writeAllGamesPage(outDir, "portal", 0, null, rootSlug, siteUrl);
+
+  // robots.txt + sitemap.xml describe the whole domain, so they belong at
+  // the root next to them. Both need the absolute origin; when it can't be
+  // resolved a sitemap would be full of unusable relative URLs, so only
+  // robots.txt is written.
+  fs.writeFileSync(path.join(outDir, "robots.txt"), renderRobotsTxt(siteUrl));
+  if (siteUrl) {
+    fs.writeFileSync(path.join(outDir, "sitemap.xml"), renderSitemap(games, rootSlug, siteUrl));
+  }
 
   // GitHub Pages serves this for any unmatched path on the domain —
   // bounces old/removed URLs (like the former "/<rootSlug>/" subfolder)
@@ -163,7 +184,8 @@ function buildPortal(rootSlug, outDir) {
   fs.writeFileSync(path.join(outDir, ".nojekyll"), "");
 
   console.log(
-    `built ${path.relative(ROOT, outDir)}/  (main game: ${rootGame.title} at "/", ${games.length} games total)`
+    `built ${path.relative(ROOT, outDir)}/  (main game: ${rootGame.title} at "/", ${games.length} games total)` +
+      (siteUrl ? `\n  canonical origin: ${siteUrl}` : "\n  no site URL resolved — canonical/sitemap omitted (set SITE_URL)")
   );
   return true;
 }
@@ -202,7 +224,9 @@ function buildAllFromDomainsJson() {
       console.error(`error: skipping malformed entry — needs both "domain" and "mainGame": ${JSON.stringify({ domain, mainGame })}`);
       continue;
     }
-    if (buildPortal(mainGame, path.join(DIST, domain))) ok++;
+    // Each entry here IS its own domain, so its canonical origin is known
+    // outright rather than inferred from the repo.
+    if (buildPortal(mainGame, path.join(DIST, domain), "https://" + domain.replace(/^https?:\/\//, "").replace(/\/*$/, "/"))) ok++;
   }
 
   console.log(`\nDone. ${ok}/${entries.length} domain folder(s) written under dist/ — upload each dist/<domain>/ to that domain's server.`);
@@ -217,11 +241,11 @@ if (arg === "--list" || arg === "-l") {
   const resolved = resolveMainGame(games, ROOT);
   if (!resolved) process.exit(1);
   console.log(`main game resolved from ${resolved.via}: ${resolved.slug}`);
-  if (!buildPortal(resolved.slug, DIST)) process.exit(1);
+  if (!buildPortal(resolved.slug, DIST, resolveSiteUrl(ROOT))) process.exit(1);
 } else if (arg === "--all") {
   buildAllFromDomainsJson();
 } else if (arg) {
-  if (!buildPortal(arg, DIST)) process.exit(1);
+  if (!buildPortal(arg, DIST, resolveSiteUrl(ROOT))) process.exit(1);
   console.log("Deploy the whole dist/ folder to this server.");
 } else {
   buildStandaloneAll(DIST);
