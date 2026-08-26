@@ -21,7 +21,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const { renderPage, renderLegalPage, legalPages } = require("./lib/render");
+const { renderPage, renderLegalPage, renderAllGamesPage, legalPages } = require("./lib/render");
 
 const ROOT = path.join(__dirname, "..");
 const PORT = Number(process.argv[2]) || 3000;
@@ -117,6 +117,10 @@ const server = http.createServer((req, res) => {
     }
     if (parts.length === 2 && parts[1].endsWith(".html")) {
       const slug = parts[1].slice(0, -".html".length);
+      if (slug === "all-games") {
+        const html = renderAllGamesPage(games, "dev");
+        return send(res, 200, html, { "Content-Type": "text/html; charset=utf-8" });
+      }
       const pageDef = legalPages.find((p) => p.slug === slug);
       if (pageDef) {
         const html = renderLegalPage(pageDef, games, "dev");

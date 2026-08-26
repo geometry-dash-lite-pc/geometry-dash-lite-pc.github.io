@@ -19,6 +19,11 @@ const ABOUT_BLURB =
   "<p>Welcome to Geometry-Dash-Lite-PC.github.io!</p>" +
   "<p>We created this website for fans of Geometry Dash who want a simple and easy place to enjoy the game and find useful information about it.</p>";
 
+// Shown below the game grid on the "All Games" listing page.
+const ALL_GAMES_BLURB =
+  "<p>Every game on this page runs straight in your browser — no downloads, no installs, no accounts. Click any title to jump in and start playing.</p>" +
+  "<p>We're always adding more free games to the collection, so check back regularly if you don't see something new today.</p>";
+
 function page(slug, navLabel, title, metaDescription, bodyHtml) {
   return { slug: slug, navLabel: navLabel, title: title, metaDescription: metaDescription, bodyHtml: bodyHtml };
 }
@@ -213,4 +218,4 @@ const pages = [
   ),
 ];
 
-module.exports = { pages: pages, SITE_NAME: SITE_NAME, EMAIL: EMAIL, ABOUT_BLURB: ABOUT_BLURB };
+module.exports = { pages: pages, SITE_NAME: SITE_NAME, EMAIL: EMAIL, ABOUT_BLURB: ABOUT_BLURB, ALL_GAMES_BLURB: ALL_GAMES_BLURB };

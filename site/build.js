@@ -35,7 +35,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { renderPage, renderLegalPage, legalPages } = require("./lib/render");
+const { renderPage, renderLegalPage, renderAllGamesPage, legalPages } = require("./lib/render");
 
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -57,6 +57,14 @@ function writeLegalPages(outDir, mode, depth, selfPrefix) {
     const html = renderLegalPage(pageDef, games, mode, { depth, selfPrefix });
     fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
   }
+}
+
+// The "All Games" nav button's target — same shared-page placement rules
+// as legal pages (see writeLegalPages above).
+function writeAllGamesPage(outDir, mode, depth, selfPrefix, rootSlug) {
+  fs.mkdirSync(outDir, { recursive: true });
+  const html = renderAllGamesPage(games, mode, { depth, selfPrefix, rootSlug });
+  fs.writeFileSync(path.join(outDir, "all-games.html"), html);
 }
 
 function writeGameSite(game, outDir, mode, depth, rootSlug) {
@@ -81,6 +89,7 @@ function writeGameSite(game, outDir, mode, depth, rootSlug) {
       const html = renderLegalPage(pageDef, games, mode, { depth });
       fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
     }
+    writeAllGamesPage(outDir, mode, depth, null, rootSlug);
   }
 
   // copy game images if they exist
@@ -131,6 +140,7 @@ function buildPortal(rootSlug, outDir) {
   // every /<slug>/ subfolder) — reuse the root game's already-copied
   // css/js/logo/favicon via selfPrefix instead of a second copy at outDir.
   writeLegalPages(outDir, "portal", 0, rootSlug);
+  writeAllGamesPage(outDir, "portal", 0, rootSlug, rootSlug);
 
   const html = renderPage(rootGame, games, "portal", { depth: 0, selfPrefix: rootSlug, rootSlug });
   fs.writeFileSync(path.join(outDir, "index.html"), html);

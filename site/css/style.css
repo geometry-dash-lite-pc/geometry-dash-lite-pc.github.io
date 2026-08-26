@@ -407,6 +407,10 @@ details p{ margin: 0; }
 .more-section{ max-width: 1240px; margin: 70px auto 80px; padding: 0 24px; }
 .section-heading{ display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
 .section-heading h2{ font-size: 1.4rem; margin: 0; }
+.all-games-page{ margin-top: 40px; }
+.section-heading h1{ font-family: var(--font-display); font-size: 1.8rem; margin: 0; }
+.all-games-blurb{ max-width: 780px; margin: 32px auto 0; }
+.all-games-blurb p{ color: var(--text-dim); line-height: 1.6; margin-bottom: 10px; }
 
 .game-grid{
   display: grid; gap: 18px;
