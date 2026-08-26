@@ -121,11 +121,9 @@ kbd{
   padding: 14px 24px;
 }
 .brand{ display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; flex-shrink: 0; }
-.brand-mark{
-  display: inline-grid; place-items: center;
-  width: 34px; height: 34px; border-radius: 9px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff; font-size: .7rem; letter-spacing: 2px;
+.brand-logo{
+  display: block; width: 34px; height: 34px; border-radius: 9px;
+  object-fit: cover;
 }
 .main-nav{ display: flex; gap: 4px; flex: 1; }
 .main-nav a{
@@ -148,6 +146,10 @@ kbd{
   .main-nav.open{ transform: translateY(0); opacity: 1; pointer-events: auto; }
   .main-nav a{ width: 100%; }
   .nav-toggle{ display: flex; }
+
+  .footer-inner{ grid-template-columns: repeat(2, 1fr); }
+  .footer-col-brand{ grid-column: 1 / -1; }
+  .footer-logo{ height: 200px; }
 }
 
 /* ===================================================================
@@ -438,13 +440,12 @@ details p{ margin: 0; }
 .site-footer{ border-top: 1px solid var(--border); padding: 40px 24px 24px; }
 .footer-inner{
   max-width: 1240px; margin: 0 auto;
-  display: flex; flex-wrap: wrap; gap: 32px 48px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 48px;
 }
-.footer-col{ min-width: 140px; }
-.footer-col-brand{ flex: 1 1 180px; }
-.footer-logo{ height: 72px; width: auto; display: block; }
+.footer-col{ min-width: 0; }
+.footer-logo{ height: 288px; width: auto; max-width: 100%; display: block; }
 .footer-col-title{
-  display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+  display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 17px;
   color: var(--text); padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--border);
 }
 a.footer-col-title{ transition: color .18s var(--ease); }
@@ -509,8 +510,9 @@ a.footer-col-title:hover{ color: var(--accent); }
   .about h3{ font-size: 1rem; }
 
   .site-footer{ padding: 24px 12px 16px; }
-  .footer-inner{ gap: 24px; }
-  .footer-logo{ height: 56px; }
+  .footer-inner{ grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer-col-brand{ grid-column: 1 / -1; }
+  .footer-logo{ height: 140px; }
   .legal-page{ padding: 32px 12px 56px; }
 }
 

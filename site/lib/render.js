@@ -55,9 +55,15 @@ function renderFaviconLinks(assetsBase) {
   );
 }
 
-function gameUrl(game, mode, depth) {
+// `rootSlug` is the game mirrored at the shared domain's root (portal mode
+// only) — links to that game should point at "/" rather than its own
+// "/<slug>/" subfolder, so the main game never shows a redundant path.
+function gameUrl(game, mode, depth, rootSlug) {
   if (mode === "dev") return "/" + game.slug;
-  if (mode === "portal") return (depth === 0 ? "" : "../") + game.slug + "/";
+  if (mode === "portal") {
+    if (rootSlug && game.slug === rootSlug) return "/";
+    return (depth === 0 ? "" : "../") + game.slug + "/";
+  }
   // no domain bought yet for this game -> honest dead link rather than a
   // silently-wrong self-referencing one; fill in `domain` in games.json
   // once purchased and rebuild.
@@ -150,11 +156,18 @@ function renderFaq(faq) {
     .join("");
 }
 
-function legalUrl(pageSlug, assetsBase) {
-  return assetsBase + "/" + pageSlug + ".html";
+// Legal pages are shared, domain-wide content, not per-game — in portal
+// mode they live once at the shared domain's root (not duplicated into
+// every game's /<slug>/ subfolder), so linking to them is depth-relative
+// like a game link, not tied to assetsBase (which is about where THIS
+// page's css/js/logo/favicon happen to live, a separate concern).
+function legalUrl(pageSlug, mode, depth) {
+  if (mode === "dev") return "/assets/" + pageSlug + ".html";
+  if (mode === "portal") return (depth === 0 ? "" : "../") + pageSlug + ".html";
+  return pageSlug + ".html";
 }
 
-function renderFooter(assetsBase) {
+function renderFooter(assetsBase, mode, depth) {
   var aboutPage = legal.pages.find(function (p) { return p.slug === "about"; });
   var contactPage = legal.pages.find(function (p) { return p.slug === "contact"; });
   var otherPages = legal.pages.filter(function (p) {
@@ -165,20 +178,20 @@ function renderFooter(assetsBase) {
     '<footer class="site-footer">\n' +
     '<div class="footer-inner">\n' +
     '<div class="footer-col footer-col-brand">\n' +
-    '<img class="footer-logo" src="' + assetsBase + '/logo.png" alt="' + SITE_NAME + ' logo" width="103" height="110" loading="lazy">\n' +
+    '<img class="footer-logo" src="' + assetsBase + '/logo.png" alt="' + SITE_NAME + ' logo" loading="lazy">\n' +
     "</div>\n" +
     '<div class="footer-col">\n' +
-    '<a class="footer-col-title" href="' + legalUrl(aboutPage.slug, assetsBase) + '">' + escapeHtml(aboutPage.navLabel) + "</a>\n" +
+    '<a class="footer-col-title" href="' + legalUrl(aboutPage.slug, mode, depth) + '">' + escapeHtml(aboutPage.navLabel) + "</a>\n" +
     "</div>\n" +
     '<div class="footer-col">\n' +
-    '<a class="footer-col-title" href="' + legalUrl(contactPage.slug, assetsBase) + '">' + escapeHtml(contactPage.navLabel) + "</a>\n" +
+    '<a class="footer-col-title" href="' + legalUrl(contactPage.slug, mode, depth) + '">' + escapeHtml(contactPage.navLabel) + "</a>\n" +
     "</div>\n" +
     '<div class="footer-col">\n' +
     '<span class="footer-col-title footer-col-heading">Pages</span>\n' +
     '<ul class="footer-links">\n' +
     otherPages
       .map(function (p) {
-        return '<li><a href="' + legalUrl(p.slug, assetsBase) + '">' + escapeHtml(p.navLabel) + "</a></li>\n";
+        return '<li><a href="' + legalUrl(p.slug, mode, depth) + '">' + escapeHtml(p.navLabel) + "</a></li>\n";
       })
       .join("") +
     "</ul>\n" +
@@ -221,7 +234,7 @@ function renderLegalPage(pageDef, catalog, mode, opts) {
     '<header class="site-header" id="siteHeader">\n' +
     '<div class="header-inner">\n' +
     '<a class="brand" href="' + homeHref + '">\n' +
-    '<span class="brand-mark" aria-hidden="true">▮▮</span>\n' +
+    '<img class="brand-logo" src="' + assetsBase + '/logo.png" alt="" width="34" height="34">\n' +
     '<span class="brand-name">' + SITE_NAME + '</span>\n' +
     "</a>\n" +
     '<nav class="main-nav" id="mainNav" aria-label="Primary">\n' +
@@ -239,14 +252,14 @@ function renderLegalPage(pageDef, catalog, mode, opts) {
     "\n</article>\n" +
     "</section>\n" +
     "</main>\n" +
-    renderFooter(assetsBase) +
+    renderFooter(assetsBase, mode, depth) +
     '<script src="' + assetsBase + '/main.js"></script>\n' +
     "</body>\n" +
     "</html>\n"
   );
 }
 
-function renderGrid(catalog, currentSlug, mode, limit, depth, assetsBase) {
+function renderGrid(catalog, currentSlug, mode, limit, depth, assetsBase, rootSlug) {
   var list = catalog.filter(function (g) {
     return g.slug !== currentSlug;
   });
@@ -262,7 +275,7 @@ function renderGrid(catalog, currentSlug, mode, limit, depth, assetsBase) {
       var imagePath = imageSrc(g, assetsBase);
       return (
         '<a class="game-card" href="' +
-        gameUrl(g, mode, depth) +
+        gameUrl(g, mode, depth, rootSlug) +
         '">' +
         '<div class="game-card-thumb" style="background:' +
         gradient +
@@ -290,6 +303,7 @@ function renderPage(game, catalog, mode, opts) {
   opts = opts || {};
   var depth = opts.depth === undefined ? 1 : opts.depth;
   var selfPrefix = opts.selfPrefix || null;
+  var rootSlug = opts.rootSlug || null;
   var assetsBase =
     mode === "dev"
       ? "/assets"
@@ -373,7 +387,7 @@ function renderPage(game, catalog, mode, opts) {
       ? "/"
       : "https://geometrydashlite.example/") +
     '">\n' +
-    '<span class="brand-mark" aria-hidden="true">▮▮</span>\n' +
+    '<img class="brand-logo" src="' + assetsBase + '/logo.png" alt="" width="34" height="34">\n' +
     '<span class="brand-name">' + SITE_NAME + '</span>\n' +
     "</a>\n" +
     '<nav class="main-nav" id="mainNav" aria-label="Primary">\n' +
@@ -453,7 +467,7 @@ function renderPage(game, catalog, mode, opts) {
     '<aside class="suggestions" aria-label="Suggested games">\n' +
     "<h2>More games</h2>\n" +
     '<div class="suggestions-list">' +
-    renderGrid(catalog, game.slug, mode, 8, depth, assetsBase) +
+    renderGrid(catalog, game.slug, mode, 8, depth, assetsBase, rootSlug) +
     "</div>\n" +
     "</aside>\n" +
     "</div>\n" +
@@ -463,7 +477,7 @@ function renderPage(game, catalog, mode, opts) {
         catalog.map(function(g, i) {
           var bgGradient = "linear-gradient(135deg," + g.cardGradient[0] + "," + g.cardGradient[1] + ")";
           var imagePath = imageSrc(g, assetsBase);
-          return '<a class="carousel-item" href="' + gameUrl(g, mode, depth) + '" title="' + escapeHtml(g.title) + '">' +
+          return '<a class="carousel-item" href="' + gameUrl(g, mode, depth, rootSlug) + '" title="' + escapeHtml(g.title) + '">' +
             '<div class="carousel-item-bg" style="background:' + bgGradient + '"></div>' +
             '<img class="carousel-item-image" src="' + imagePath + '" alt="' + escapeHtml(g.title) + '" loading="lazy" onerror="this.style.display=\'none\'">' +
             '<span class="carousel-item-badge">' + escapeHtml(g.initial) + '</span>' +
@@ -518,11 +532,11 @@ function renderPage(game, catalog, mode, opts) {
     '<section class="more-section reveal">\n' +
     '<div class="section-heading"><h2>Browse all games</h2></div>\n' +
     '<div class="game-grid" id="gameGrid">' +
-    renderGrid(catalog, game.slug, mode, null, depth, assetsBase) +
+    renderGrid(catalog, game.slug, mode, null, depth, assetsBase, rootSlug) +
     "</div>\n" +
     "</section>\n" +
     "</main>\n" +
-    renderFooter(assetsBase) +
+    renderFooter(assetsBase, mode, depth) +
     '<script src="' +
     assetsBase +
     '/main.js"></script>\n' +

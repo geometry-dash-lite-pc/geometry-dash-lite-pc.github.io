@@ -47,7 +47,19 @@ function listSlugs() {
   console.log("\nUse one of these with: node site/build.js <slug>");
 }
 
-function writeGameSite(game, outDir, mode, depth) {
+// Legal pages (about, contact, dmca, ...) are shared, domain-wide content,
+// not per-game. `selfPrefix` lets them reuse an existing subfolder's
+// css/js/logo/favicon instead of duplicating those assets a second time
+// (same trick as the portal root's mirrored index.html).
+function writeLegalPages(outDir, mode, depth, selfPrefix) {
+  fs.mkdirSync(outDir, { recursive: true });
+  for (const pageDef of legalPages) {
+    const html = renderLegalPage(pageDef, games, mode, { depth, selfPrefix });
+    fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
+  }
+}
+
+function writeGameSite(game, outDir, mode, depth, rootSlug) {
   fs.mkdirSync(outDir, { recursive: true });
 
   fs.copyFileSync(path.join(__dirname, "css", "style.css"), path.join(outDir, "style.css"));
@@ -59,9 +71,16 @@ function writeGameSite(game, outDir, mode, depth) {
     fs.copyFileSync(path.join(faviconDir, file), path.join(outDir, file));
   });
 
-  for (const pageDef of legalPages) {
-    const html = renderLegalPage(pageDef, games, mode, { depth });
-    fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
+  // In portal mode, legal pages live once at the shared domain's root
+  // (written separately by buildPortal after this loop) — every game links
+  // there with a relative "../<page>.html" instead of getting its own copy.
+  // In standalone build mode each game IS its own domain root, so it needs
+  // its own copy right here.
+  if (mode !== "portal") {
+    for (const pageDef of legalPages) {
+      const html = renderLegalPage(pageDef, games, mode, { depth });
+      fs.writeFileSync(path.join(outDir, pageDef.slug + ".html"), html);
+    }
   }
 
   // copy game images if they exist
@@ -85,7 +104,7 @@ function writeGameSite(game, outDir, mode, depth) {
     });
   }
 
-  const html = renderPage(game, games, mode, { depth });
+  const html = renderPage(game, games, mode, { depth, rootSlug });
   fs.writeFileSync(path.join(outDir, "index.html"), html);
 }
 
@@ -105,10 +124,15 @@ function buildPortal(rootSlug, outDir) {
   fs.rmSync(outDir, { recursive: true, force: true });
 
   for (const game of games) {
-    writeGameSite(game, path.join(outDir, game.slug), "portal", 1);
+    writeGameSite(game, path.join(outDir, game.slug), "portal", 1, rootSlug);
   }
 
-  const html = renderPage(rootGame, games, "portal", { depth: 0, selfPrefix: rootSlug });
+  // Legal pages live once at the shared domain root (not duplicated into
+  // every /<slug>/ subfolder) — reuse the root game's already-copied
+  // css/js/logo/favicon via selfPrefix instead of a second copy at outDir.
+  writeLegalPages(outDir, "portal", 0, rootSlug);
+
+  const html = renderPage(rootGame, games, "portal", { depth: 0, selfPrefix: rootSlug, rootSlug });
   fs.writeFileSync(path.join(outDir, "index.html"), html);
 
   // GitHub Pages pipes everything through Jekyll unless this file exists,

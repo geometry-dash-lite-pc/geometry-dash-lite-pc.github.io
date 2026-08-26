@@ -26,8 +26,8 @@ const pages = [
     "About Us",
     "Learn more about " + SITE_NAME + " — a free browser portal for Geometry Dash Lite and other online games.",
     "<h1>About Us</h1>" +
-      "<p>" + SITE_NAME + " is an independent website that brings together Geometry Dash Lite and a curated set of other free browser games in one place. Everything on this site runs directly in your browser — no downloads, no installs, no accounts.</p>" +
-      "<p>Our goal is simple: make it fast and easy to jump into a game and start playing. We're not affiliated with RobTop Games or any of the original developers behind the titles we feature — we're just fans who built a convenient front door to play them.</p>" +
+      "<p>Welcome to Geometry-Dash-Lite-PC.github.io!</p>" +
+      "<p>We created this website for fans of Geometry Dash who want a simple and easy place to enjoy the game and find useful information about it.</p>" +
       "<p>If you have questions, feedback, or a copyright concern, see our <a href=\"contact.html\">Contact Us</a> page.</p>"
   ),
   page(
