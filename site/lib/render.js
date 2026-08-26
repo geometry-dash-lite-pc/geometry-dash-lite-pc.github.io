@@ -97,10 +97,10 @@ function pageTitle(game) {
   return shorter.length <= TITLE_MAX ? shorter : game.title + " — Play Online";
 }
 
-// schema.org VideoGame for the page's own game. `aggregateRating` is only
-// valid with at least one actual rating — emitting ratingCount "0" (every
-// game in games.json today) makes Search Console reject the whole block, so
-// it's left out until real counts exist.
+// schema.org VideoGame for the page's own game. No aggregateRating: the
+// counts in games.json aren't backed by a real review mechanism, and
+// publishing fabricated rating numbers in structured data risks a Google
+// manual action — worse than any SEO benefit the stars added.
 function gameSchema(game, canonical, image) {
   var schema = {
     "@context": "https://schema.org",
@@ -120,13 +120,6 @@ function gameSchema(game, canonical, image) {
   };
   if (canonical) schema.url = canonical;
   if (image) schema.image = image;
-  if (game.rating && Number(game.rating.count) > 0) {
-    schema.aggregateRating = {
-      "@type": "AggregateRating",
-      ratingValue: String(game.rating.value),
-      ratingCount: String(game.rating.count),
-    };
-  }
   return schema;
 }
 
@@ -258,25 +251,6 @@ function isPlayable(game) {
 // Thumbnails have to follow the same base or the root page 404s every one.
 function imageSrc(game, assetsBase) {
   return assetsBase + "/games/" + (game.image || game.slug + ".png");
-}
-
-function renderStars(rating) {
-  var pct = Math.round((rating.value / 5) * 100);
-  return (
-    '<div class="rating" aria-label="Rating ' +
-    rating.value +
-    ' out of 5">' +
-    '<div class="stars" style="--fill: ' +
-    pct +
-    '%"><span></span><span></span><span></span><span></span><span></span></div>' +
-    "<strong>" +
-    rating.value +
-    "</strong>" +
-    '<span class="muted">(' +
-    rating.count.toLocaleString("en-US") +
-    " ratings)</span>" +
-    "</div>"
-  );
 }
 
 function renderTags(tags) {
@@ -637,8 +611,6 @@ function renderPage(game, catalog, mode, opts) {
     renderTags(game.tags) +
     "</div>\n" +
     "</div>\n" +
-    renderStars(game.rating) +
-    "\n" +
     '<div class="stage-actions">\n' +
     (playable
       ? '<button class="btn btn-icon" id="fullscreenBtn" title="Play fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>\n'

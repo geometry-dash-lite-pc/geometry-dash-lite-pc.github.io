@@ -183,15 +183,6 @@ kbd{
   background: var(--surface-2); color: var(--text-dim); border: 1px solid var(--border);
 }
 
-.rating{ display: flex; align-items: center; gap: 8px; }
-.stars{ position: relative; display: inline-flex; gap: 2px; font-size: 1rem; color: var(--border); }
-.stars span::before{ content: "★"; }
-.stars::after{
-  content: "★★★★★"; position: absolute; inset: 0; overflow: hidden; width: var(--fill);
-  color: var(--warn); white-space: nowrap; display: flex;
-}
-.stars span{ visibility: hidden; }
-
 .stage-actions{ display: flex; gap: 8px; }
 #likeBtn.liked{ color: #ff5c7a; border-color: #ff5c7a; }
 #likeBtn.liked svg path{ fill: #ff5c7a; }
@@ -552,7 +543,6 @@ a.footer-col-title:hover{ color: var(--accent); }
 
   .stage-wrap{ padding: 0 8px; }
   .stage-meta h1{ font-size: 1.5rem; }
-  .stage-meta .rating{ flex-direction: column; gap: 4px; }
 
   .game-frame-inner{ min-height: 300px; }
 
