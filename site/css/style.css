@@ -405,8 +405,9 @@ details p{ margin: 0; }
 .meta-list > div{ display: flex; justify-content: space-between; font-size: .88rem; }
 .meta-list dt{ color: var(--text-faint); }
 .meta-list dd{ margin: 0; font-weight: 600; }
-.share-row{ display: flex; gap: 8px; }
-.share-row .btn{ flex: 1; }
+.share-row{ display: flex; flex-wrap: wrap; gap: 8px; }
+.share-row .btn{ flex: 1 1 calc(50% - 4px); font-size: .85rem; padding: .6em .5em; }
+.share-row .btn.is-copied{ color: var(--success); border-color: var(--success); }
 
 /* ===================================================================
    MORE GAMES GRID

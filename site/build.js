@@ -36,6 +36,7 @@
 const fs = require("fs");
 const path = require("path");
 const { renderPage, renderLegalPage, renderAllGamesPage, renderNotFoundPage, legalPages } = require("./lib/render");
+const { resolveMainGame } = require("./lib/main-game");
 
 const ROOT = path.join(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -208,73 +209,12 @@ function buildAllFromDomainsJson() {
   if (ok < entries.length) process.exitCode = 1;
 }
 
-/**
- * Works out which game belongs at "/" without being told, so the exact same
- * source can be pushed to many GitHub Pages repos unchanged. In order:
- *
- *   1. MAIN_GAME env var          — explicit override, wins over everything
- *   2. main-game.txt at repo root — explicit override, committed per repo
- *   3. the repository name        — "2048.github.io" -> "2048",
- *                                   "run3.github.io" -> "run3"
- *
- * (3) is the reason no per-repo edit is normally needed: on GitHub Actions,
- * GITHUB_REPOSITORY is "<owner>/<repo>", and a user/organisation Pages repo
- * is always named "<owner>.github.io", so the owner name doubles as the slug.
- */
-function resolveMainGame() {
-  const has = (s) => games.some((g) => g.slug === s);
-
-  const fromEnv = (process.env.MAIN_GAME || "").trim();
-  if (fromEnv) {
-    if (has(fromEnv)) return { slug: fromEnv, via: "MAIN_GAME env var" };
-    console.error(`error: MAIN_GAME="${fromEnv}" is not a slug in games.json.`);
-    return null;
-  }
-
-  const filePath = path.join(ROOT, "main-game.txt");
-  if (fs.existsSync(filePath)) {
-    const fromFile = fs.readFileSync(filePath, "utf8").trim();
-    if (fromFile) {
-      if (has(fromFile)) return { slug: fromFile, via: "main-game.txt" };
-      console.error(`error: main-game.txt says "${fromFile}", which is not a slug in games.json.`);
-      return null;
-    }
-  }
-
-  const repo = (process.env.GITHUB_REPOSITORY || "").split("/")[1] || "";
-  const fromRepo = repo.replace(/\.github\.io$/i, "").toLowerCase();
-  if (fromRepo) {
-    if (has(fromRepo)) return { slug: fromRepo, via: `repository name "${repo}"` };
-
-    // Repo names usually carry a marketing suffix the slug doesn't have
-    // ("geometry-dash-lite-pc" -> geometry-dash-lite, "run3-online" -> run3).
-    // Check longest slug first so "geometry-dash-lite-2" isn't beaten to the
-    // match by the shorter "geometry-dash-lite" that also prefixes it.
-    const prefixMatch = games
-      .map((g) => g.slug)
-      .sort((a, b) => b.length - a.length)
-      .find((slug) => fromRepo.startsWith(slug + "-"));
-    if (prefixMatch) {
-      return { slug: prefixMatch, via: `repository name "${repo}"` };
-    }
-  }
-
-  console.error("error: could not work out which game should be the root game.");
-  console.error("Fix it in any one of these ways:");
-  console.error('  - name the repo "<slug>.github.io" (e.g. 2048.github.io)');
-  console.error('  - commit a main-game.txt at the repo root containing just the slug');
-  console.error("  - set the MAIN_GAME env var / workflow input");
-  if (fromRepo) console.error(`\n(repo name suggested "${fromRepo}", which is not in games.json)`);
-  console.error("\nRun: node site/build.js --list   to see valid slugs.");
-  return null;
-}
-
 const arg = process.argv[2] || null;
 
 if (arg === "--list" || arg === "-l") {
   listSlugs();
 } else if (arg === "--auto") {
-  const resolved = resolveMainGame();
+  const resolved = resolveMainGame(games, ROOT);
   if (!resolved) process.exit(1);
   console.log(`main game resolved from ${resolved.via}: ${resolved.slug}`);
   if (!buildPortal(resolved.slug, DIST)) process.exit(1);

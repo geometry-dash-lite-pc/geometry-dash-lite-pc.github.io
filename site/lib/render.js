@@ -59,7 +59,9 @@ function renderFaviconLinks(assetsBase) {
 // only) — links to that game should point at "/" rather than its own
 // "/<slug>/" subfolder, so the main game never shows a redundant path.
 function gameUrl(game, mode, depth, rootSlug) {
-  if (mode === "dev") return "/" + game.slug;
+  if (mode === "dev") {
+    return rootSlug && game.slug === rootSlug ? "/" : "/" + game.slug;
+  }
   if (mode === "portal") {
     if (rootSlug && game.slug === rootSlug) return "/";
     return (depth === 0 ? "" : "../") + game.slug + "/";
@@ -491,7 +493,7 @@ function renderPage(game, catalog, mode, opts) {
     (playable
       ? '<button class="btn btn-icon" id="fullscreenBtn" title="Play fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>\n'
       : "") +
-    '<button class="btn btn-icon" id="likeBtn" title="Like this game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.4 8 2.1 4 6 4c2.1 0 3.6 1.1 4.4 2.4C11.2 5.1 12.7 4 14.8 4c3.9 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>\n' +
+    '<button class="btn btn-icon" id="likeBtn" title="Add to favorites" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.4 8 2.1 4 6 4c2.1 0 3.6 1.1 4.4 2.4C11.2 5.1 12.7 4 14.8 4c3.9 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>\n' +
     '<button class="btn btn-icon" id="shareBtn" title="Copy link"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="2.4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.1 10.8 15.9 6.6M8.1 13.2l7.8 4.2" stroke="currentColor" stroke-width="2"/></svg></button>\n' +
     "</div>\n" +
     "</div>\n" +
@@ -596,7 +598,14 @@ function renderPage(game, catalog, mode, opts) {
     "</div>\n" +
     '<div class="panel-card">\n' +
     "<h3>Share</h3>\n" +
-    '<div class="share-row"><button class="btn btn-outline" data-share="copy">Copy link</button><button class="btn btn-outline" data-share="x">X</button></div>\n' +
+    '<div class="share-row">' +
+    '<button class="btn btn-outline" data-share="copy">Copy link</button>' +
+    '<button class="btn btn-outline" data-share="x">X</button>' +
+    '<button class="btn btn-outline" data-share="facebook">Facebook</button>' +
+    '<button class="btn btn-outline" data-share="whatsapp">WhatsApp</button>' +
+    '<button class="btn btn-outline" data-share="telegram">Telegram</button>' +
+    '<button class="btn btn-outline" data-share="reddit">Reddit</button>' +
+    "</div>\n" +
     "</div>\n" +
     "</aside>\n" +
     "</div>\n" +

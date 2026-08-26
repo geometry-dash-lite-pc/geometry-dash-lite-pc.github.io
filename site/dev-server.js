@@ -22,6 +22,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { renderPage, renderLegalPage, renderAllGamesPage, legalPages } = require("./lib/render");
+const { resolveMainGame } = require("./lib/main-game");
 
 const ROOT = path.join(__dirname, "..");
 const PORT = Number(process.argv[2]) || 3000;
@@ -67,45 +68,25 @@ function serveFile(res, filePath) {
   });
 }
 
-function renderIndex(games) {
-  const cards = games
-    .map((g) => {
-      const gradient = `linear-gradient(135deg,${g.cardGradient[0]},${g.cardGradient[1]})`;
-      return `<a class="game-card" href="/${g.slug}">
-        <div class="game-card-thumb" style="background:${gradient}"><span>${g.initial}</span></div>
-        <div class="game-card-body">
-          <div class="game-card-title">${g.title}</div>
-          <div class="game-card-genre">${g.genre}</div>
-        </div>
-      </a>`;
-    })
-    .join("");
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PlayPortal (dev) — all games</title>
-<link rel="stylesheet" href="/assets/style.css">
-</head>
-<body>
-<main style="max-width:1240px;margin:0 auto;padding:60px 24px;">
-  <h1>PlayPortal — local dev index</h1>
-  <p class="muted">Each game below is its own route today (${games.map((g) => "/" + g.slug).join(", ")}) and its own standalone domain-ready export once you run <code>node site/build.js</code>.</p>
-  <div class="game-grid">${cards}</div>
-</main>
-</body>
-</html>`;
-}
-
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const parts = url.pathname.split("/").filter(Boolean);
   const games = loadGames();
 
+  // Whichever game a deploy would put at the domain root gets served ONLY
+  // at "/" here too — never also at "/<slug>". Two URLs serving one page is
+  // duplicate content, and the portal build deliberately doesn't emit that
+  // subfolder, so the dev server must not either.
+  const resolved = resolveMainGame(games, ROOT, { quiet: true });
+  const rootSlug = resolved ? resolved.slug : null;
+  const rootGame = rootSlug ? games.find((g) => g.slug === rootSlug) : null;
+
   if (parts.length === 0) {
-    return send(res, 200, renderIndex(games), { "Content-Type": "text/html; charset=utf-8" });
+    if (!rootGame) {
+      return send(res, 500, "Could not resolve the root game — set MAIN_GAME or add main-game.txt.");
+    }
+    const html = renderPage(rootGame, games, "dev", { rootSlug });
+    return send(res, 200, html, { "Content-Type": "text/html; charset=utf-8" });
   }
 
   if (parts[0] === "assets") {
@@ -118,7 +99,7 @@ const server = http.createServer((req, res) => {
     if (parts.length === 2 && parts[1].endsWith(".html")) {
       const slug = parts[1].slice(0, -".html".length);
       if (slug === "all-games") {
-        const html = renderAllGamesPage(games, "dev");
+        const html = renderAllGamesPage(games, "dev", { rootSlug });
         return send(res, 200, html, { "Content-Type": "text/html; charset=utf-8" });
       }
       const pageDef = legalPages.find((p) => p.slug === slug);
@@ -152,16 +133,37 @@ const server = http.createServer((req, res) => {
   }
 
   const slug = parts[0];
+
+  // The root game lives at "/" and nowhere else — send its old slug URL
+  // there permanently rather than serving the same page twice. Mirrors the
+  // built site, where this path doesn't exist and 404.html bounces to "/".
+  if (rootSlug && slug === rootSlug) {
+    return send(res, 301, "", { Location: "/" });
+  }
+
   const game = games.find((g) => g.slug === slug);
   if (game) {
-    const html = renderPage(game, games, "dev");
+    const html = renderPage(game, games, "dev", { rootSlug });
     return send(res, 200, html, { "Content-Type": "text/html; charset=utf-8" });
   }
 
-  send(res, 404, "Not found");
+  // Matches the built site's 404.html, which redirects unknown paths to "/".
+  send(res, 302, "", { Location: "/" });
 });
 
 server.listen(PORT, () => {
+  const games = loadGames();
+  const resolved = resolveMainGame(games, ROOT, { quiet: true });
+  const rootSlug = resolved ? resolved.slug : null;
+  const rootGame = rootSlug ? games.find((g) => g.slug === rootSlug) : null;
+
   console.log(`PlayPortal dev server running at http://localhost:${PORT}`);
-  loadGames().forEach((g) => console.log(`  http://localhost:${PORT}/${g.slug}  (${g.title})`));
+  if (rootGame) {
+    console.log(`  http://localhost:${PORT}/  (${rootGame.title} — main game, ${resolved.via})`);
+  } else {
+    console.log("  warning: no root game resolved — set MAIN_GAME or add main-game.txt");
+  }
+  games
+    .filter((g) => g.slug !== rootSlug)
+    .forEach((g) => console.log(`  http://localhost:${PORT}/${g.slug}  (${g.title})`));
 });

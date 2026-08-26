@@ -115,32 +115,156 @@
     }
   }
 
-  /* ---------------- like / share ---------------- */
-  function initActions() {
+  /* ---------------- favorites (persisted per device via localStorage) ---------------- */
+  // Wrapped in try/catch throughout: localStorage.setItem throws in Safari
+  // private browsing and can throw under strict cookie/storage blocking —
+  // a blocked write should never break the button, just fail to persist.
+  var FAVORITES_KEY = "gdlp:favorites";
+
+  function readFavorites() {
+    try {
+      var raw = window.localStorage.getItem(FAVORITES_KEY);
+      var list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function writeFavorites(list) {
+    try {
+      window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(list));
+    } catch (e) {
+      // storage unavailable (private mode, quota, disabled) — the toggle
+      // still works for the rest of this page view, it just won't persist.
+    }
+  }
+
+  function initFavorites() {
     var likeBtn = document.getElementById("likeBtn");
-    if (likeBtn) {
-      likeBtn.addEventListener("click", function () {
-        likeBtn.classList.toggle("liked");
+    var slug = document.body.getAttribute("data-game-slug");
+    if (!likeBtn || !slug) return;
+
+    function setLiked(liked) {
+      likeBtn.classList.toggle("liked", liked);
+      likeBtn.setAttribute("aria-pressed", liked ? "true" : "false");
+      likeBtn.title = liked ? "Remove from favorites" : "Add to favorites";
+    }
+
+    setLiked(readFavorites().indexOf(slug) !== -1);
+
+    likeBtn.addEventListener("click", function () {
+      var favorites = readFavorites();
+      var idx = favorites.indexOf(slug);
+      var nowLiked = idx === -1;
+      if (nowLiked) {
+        favorites.push(slug);
+      } else {
+        favorites.splice(idx, 1);
+      }
+      writeFavorites(favorites);
+      setLiked(nowLiked);
+    });
+  }
+
+  /* ---------------- share ---------------- */
+  function initActions() {
+    var pageUrl = window.location.href;
+    var pageTitle = (document.querySelector("h1") && document.querySelector("h1").textContent.trim()) || document.title;
+    var encodedUrl = encodeURIComponent(pageUrl);
+    var encodedTitle = encodeURIComponent(pageTitle);
+
+    var SHARE_LINKS = {
+      x: "https://twitter.com/intent/tweet?url=" + encodedUrl + "&text=" + encodedTitle,
+      facebook: "https://www.facebook.com/sharer/sharer.php?u=" + encodedUrl,
+      whatsapp: "https://api.whatsapp.com/send?text=" + encodedTitle + "%20" + encodedUrl,
+      telegram: "https://t.me/share/url?url=" + encodedUrl + "&text=" + encodedTitle,
+      reddit: "https://www.reddit.com/submit?url=" + encodedUrl + "&title=" + encodedTitle,
+    };
+
+    // Classic hidden-textarea + execCommand copy trick — used both as the
+    // primary method on older browsers / insecure contexts where the
+    // Clipboard API doesn't exist at all, and as a fallback when the
+    // Clipboard API exists but the call itself rejects (e.g. a permission
+    // prompt denied, or the document briefly not focused).
+    function legacyCopy() {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = pageUrl;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        var ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function copyLink(onDone) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(pageUrl).then(
+          function () { onDone && onDone(true); },
+          function () { onDone && onDone(legacyCopy()); }
+        );
+        return;
+      }
+      onDone && onDone(legacyCopy());
+    }
+
+    function flashCopied(btn, copiedLabel) {
+      if (!btn) return;
+      var original = btn.textContent;
+      btn.textContent = copiedLabel;
+      btn.classList.add("is-copied");
+      setTimeout(function () {
+        btn.textContent = original;
+        btn.classList.remove("is-copied");
+      }, 1800);
+    }
+
+    function openShareWindow(url) {
+      window.open(url, "_blank", "noopener,noreferrer,width=600,height=500");
+    }
+
+    // The icon button in the stage header: on devices/browsers that support
+    // the native share sheet (mostly mobile), let the OS show every app the
+    // user has installed — the most complete "every platform" option there
+    // is. Everywhere else, fall back to copying the link.
+    var shareBtn = document.getElementById("shareBtn");
+    if (shareBtn) {
+      shareBtn.addEventListener("click", function () {
+        if (navigator.share) {
+          navigator.share({ title: pageTitle, url: pageUrl }).catch(function () {
+            // AbortError (user dismissed the sheet) or any other failure —
+            // no fallback needed, the sheet itself already gave feedback.
+          });
+          return;
+        }
+        copyLink(function (ok) {
+          if (ok) {
+            shareBtn.title = "Copied!";
+            setTimeout(function () { shareBtn.title = "Copy link"; }, 1800);
+          }
+        });
       });
     }
 
-    function copyLink() {
-      navigator.clipboard && navigator.clipboard.writeText(window.location.href).catch(function () {});
-    }
-    var shareBtn = document.getElementById("shareBtn");
-    if (shareBtn) shareBtn.addEventListener("click", copyLink);
-
+    // The explicit per-platform buttons in the "Share" panel.
     document.querySelectorAll("[data-share]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var type = btn.getAttribute("data-share");
-        if (type === "copy") copyLink();
-        if (type === "x") {
-          window.open(
-            "https://twitter.com/intent/tweet?url=" + encodeURIComponent(window.location.href),
-            "_blank",
-            "noopener"
-          );
+        if (type === "copy") {
+          copyLink(function (ok) {
+            if (ok) flashCopied(btn, "Copied!");
+          });
+          return;
         }
+        var url = SHARE_LINKS[type];
+        if (url) openShareWindow(url);
       });
     });
   }
@@ -210,6 +334,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initGameFrame();
+    initFavorites();
     initActions();
     initNav();
     initReveal();
