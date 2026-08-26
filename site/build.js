@@ -164,6 +164,19 @@ function buildPortal(rootSlug, outDir, siteUrl) {
   writeLegalPages(outDir, "portal", 0, null, siteUrl);
   writeAllGamesPage(outDir, "portal", 0, null, rootSlug, siteUrl);
 
+  // Site-ownership verification files (Google Search Console, Bing Webmaster,
+  // etc.) have to sit at the domain root untouched — copied straight through
+  // rather than templated, so dropping a new one in site/verify/ is enough;
+  // no build.js change needed. dist/ is rebuilt from scratch every deploy, so
+  // without this step a verification file placed only in dist/ would vanish
+  // on the next push.
+  const verifyDir = path.join(__dirname, "verify");
+  if (fs.existsSync(verifyDir)) {
+    for (const file of fs.readdirSync(verifyDir)) {
+      fs.copyFileSync(path.join(verifyDir, file), path.join(outDir, file));
+    }
+  }
+
   // robots.txt + sitemap.xml describe the whole domain, so they belong at
   // the root next to them. Both need the absolute origin; when it can't be
   // resolved a sitemap would be full of unusable relative URLs, so only
