@@ -454,6 +454,10 @@ a.footer-col-title:hover{ color: var(--accent); }
 .footer-links{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .footer-links a{ font-size: .9rem; color: var(--text-dim); transition: color .18s var(--ease); }
 .footer-links a:hover{ color: var(--accent); }
+.footer-col p{ font-size: .9rem; color: var(--text-dim); line-height: 1.5; margin: 0 0 10px; }
+.footer-email{ margin-top: 4px; }
+.footer-email a{ font-size: .9rem; color: var(--text-dim); transition: color .18s var(--ease); }
+.footer-email a:hover{ color: var(--accent); }
 .footer-copy{ width: 100%; text-align: center; font-size: .8rem; margin-top: 8px; }
 
 /* ===================================================================

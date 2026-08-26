@@ -6,30 +6,24 @@
  * plain HTML strings — trusted, author-written copy, not user input, so it
  * isn't run through escapeHtml like game data is.
  *
- * The contact email is a literal placeholder on purpose (left for the site
- * owner to fill in before launch) — do not replace it with a real address.
  */
 
-const EMAIL = "[YOUR EMAIL HERE]";
-const DMCA_EMAIL = "[YOUR DMCA EMAIL HERE]";
+const EMAIL = "Myemail@gmail.com";
+const DMCA_EMAIL = "Myemail@gmail.com";
 const SITE_NAME = "Geometry Dash Lite";
 const LAST_UPDATED = "August 26, 2026";
+
+// Shown directly in the footer's "About Us" column — there's no separate
+// About page, just this blurb.
+const ABOUT_BLURB =
+  "<p>Welcome to Geometry-Dash-Lite-PC.github.io!</p>" +
+  "<p>We created this website for fans of Geometry Dash who want a simple and easy place to enjoy the game and find useful information about it.</p>";
 
 function page(slug, navLabel, title, metaDescription, bodyHtml) {
   return { slug: slug, navLabel: navLabel, title: title, metaDescription: metaDescription, bodyHtml: bodyHtml };
 }
 
 const pages = [
-  page(
-    "about",
-    "About Us",
-    "About Us",
-    "Learn more about " + SITE_NAME + " — a free browser portal for Geometry Dash Lite and other online games.",
-    "<h1>About Us</h1>" +
-      "<p>Welcome to Geometry-Dash-Lite-PC.github.io!</p>" +
-      "<p>We created this website for fans of Geometry Dash who want a simple and easy place to enjoy the game and find useful information about it.</p>" +
-      "<p>If you have questions, feedback, or a copyright concern, see our <a href=\"contact.html\">Contact Us</a> page.</p>"
-  ),
   page(
     "contact",
     "Contact Us",
@@ -219,4 +213,4 @@ const pages = [
   ),
 ];
 
-module.exports = { pages: pages, SITE_NAME: SITE_NAME };
+module.exports = { pages: pages, SITE_NAME: SITE_NAME, EMAIL: EMAIL, ABOUT_BLURB: ABOUT_BLURB };

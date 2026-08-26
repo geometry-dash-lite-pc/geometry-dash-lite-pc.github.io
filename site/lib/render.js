@@ -168,10 +168,9 @@ function legalUrl(pageSlug, mode, depth) {
 }
 
 function renderFooter(assetsBase, mode, depth) {
-  var aboutPage = legal.pages.find(function (p) { return p.slug === "about"; });
   var contactPage = legal.pages.find(function (p) { return p.slug === "contact"; });
   var otherPages = legal.pages.filter(function (p) {
-    return p.slug !== "about" && p.slug !== "contact";
+    return p.slug !== "contact";
   });
 
   return (
@@ -181,10 +180,12 @@ function renderFooter(assetsBase, mode, depth) {
     '<img class="footer-logo" src="' + assetsBase + '/logo.png" alt="' + SITE_NAME + ' logo" loading="lazy">\n' +
     "</div>\n" +
     '<div class="footer-col">\n' +
-    '<a class="footer-col-title" href="' + legalUrl(aboutPage.slug, mode, depth) + '">' + escapeHtml(aboutPage.navLabel) + "</a>\n" +
-    "</div>\n" +
+    '<span class="footer-col-title footer-col-heading">About Us</span>\n' +
+    legal.ABOUT_BLURB +
+    "\n</div>\n" +
     '<div class="footer-col">\n' +
     '<a class="footer-col-title" href="' + legalUrl(contactPage.slug, mode, depth) + '">' + escapeHtml(contactPage.navLabel) + "</a>\n" +
+    '<p class="footer-email"><a href="mailto:' + legal.EMAIL + '">' + escapeHtml(legal.EMAIL) + "</a></p>\n" +
     "</div>\n" +
     '<div class="footer-col">\n' +
     '<span class="footer-col-title footer-col-heading">Pages</span>\n' +
