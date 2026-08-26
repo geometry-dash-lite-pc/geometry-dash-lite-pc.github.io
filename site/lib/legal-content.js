@@ -21,7 +21,9 @@ const ABOUT_BLURB =
 
 // Shown below the game grid on the "All Games" listing page.
 const ALL_GAMES_BLURB =
-  "<p>Looking for more games like Geometry Dash? Explore our collection of fun and challenging games inspired by fast-paced platforming, rhythm, jumping, and obstacle-dodging gameplay. Whether you enjoy quick reflex challenges, difficult levels, or simple arcade games, you’ll find plenty of options to try. Browse the games below, choose your favorite, and start playing directly in your browser. New games may be added regularly, so check back to discover more exciting games and find your next favorite!</p>";
+  "<h2>More Games to Play</h2>" +
+  "<p>Looking for more games like Geometry Dash? Explore our collection of fun and challenging games inspired by fast-paced platforming, rhythm, jumping, and obstacle-dodging gameplay. Whether you enjoy quick reflex challenges, difficult levels, or simple arcade games, you’ll find plenty of options to try.</p>" +
+  "<p>Browse the games below, choose your favorite, and start playing directly in your browser. New games may be added regularly, so check back to discover more exciting games and find your next favorite!</p>";
 
 function page(slug, navLabel, title, metaDescription, bodyHtml) {
   return { slug: slug, navLabel: navLabel, title: title, metaDescription: metaDescription, bodyHtml: bodyHtml };

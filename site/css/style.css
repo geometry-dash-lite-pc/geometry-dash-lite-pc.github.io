@@ -409,8 +409,18 @@ details p{ margin: 0; }
 .section-heading h2{ font-size: 1.4rem; margin: 0; }
 .all-games-page{ margin-top: 40px; }
 .section-heading h1{ font-family: var(--font-display); font-size: 1.8rem; margin: 0; }
-.all-games-blurb{ max-width: 780px; margin: 32px auto 0; }
-.all-games-blurb p{ color: var(--text-dim); line-height: 1.6; margin-bottom: 10px; }
+.all-games-blurb{
+  width: 100%; margin-top: 64px; padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+.all-games-blurb h2{
+  font-family: var(--font-display); font-weight: 700; font-size: 1.9rem;
+  color: #fff; margin: 0 0 18px;
+}
+.all-games-blurb p{
+  color: #fff; font-size: 1.15rem; line-height: 1.8; margin-bottom: 16px; max-width: 900px;
+}
+.all-games-blurb p:last-child{ margin-bottom: 0; }
 
 .game-grid{
   display: grid; gap: 18px;
@@ -521,6 +531,9 @@ a.footer-col-title:hover{ color: var(--accent); }
   .footer-col-brand{ grid-column: 1 / -1; }
   .footer-logo{ height: 140px; }
   .legal-page{ padding: 32px 12px 56px; }
+  .all-games-blurb{ margin-top: 40px; padding-top: 24px; }
+  .all-games-blurb h2{ font-size: 1.4rem; }
+  .all-games-blurb p{ font-size: 1rem; }
 }
 
 /* ===================================================================
