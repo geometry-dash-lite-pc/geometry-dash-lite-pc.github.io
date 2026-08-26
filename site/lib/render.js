@@ -560,19 +560,21 @@ function renderPage(game, catalog, mode, opts) {
     '<section class="content-section reveal">\n' +
     '<div class="content-grid">\n' +
     '<article class="about">\n' +
-    "<h2>About " +
-    escapeHtml(game.title) +
-    "</h2>\n" +
-    "<p>" +
-    escapeHtml(game.about) +
-    "</p>\n" +
-    "<h3>How to play</h3>\n" +
-    '<ol class="howto">' +
-    renderHowto(game.howto) +
-    "</ol>\n" +
-    "<h3>Frequently asked questions</h3>\n" +
-    renderFaq(game.faq) +
-    "\n" +
+    (game.richContent
+      ? '<div class="rich-content">' + game.richContent + "</div>\n"
+      : "<h2>About " +
+        escapeHtml(game.title) +
+        "</h2>\n" +
+        "<p>" +
+        escapeHtml(game.about) +
+        "</p>\n" +
+        "<h3>How to play</h3>\n" +
+        '<ol class="howto">' +
+        renderHowto(game.howto) +
+        "</ol>\n" +
+        "<h3>Frequently asked questions</h3>\n" +
+        renderFaq(game.faq) +
+        "\n") +
     "</article>\n" +
     '<aside class="side-panel">\n' +
     '<div class="panel-card">\n' +
