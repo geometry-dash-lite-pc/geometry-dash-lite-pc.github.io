@@ -63,7 +63,7 @@ function renderSocialMeta(opts) {
   var image = opts.image;
   return (
     (canonical ? '<link rel="canonical" href="' + escapeHtml(canonical) + '">\n' : "") +
-    '<meta name="robots" content="index,follow">\n' +
+    '<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">\n' +
     '<meta property="og:type" content="' + (opts.ogType || "website") + '">\n' +
     '<meta property="og:site_name" content="' + escapeHtml(SITE_NAME) + '">\n' +
     '<meta property="og:title" content="' + escapeHtml(opts.title) + '">\n' +
@@ -85,6 +85,7 @@ function renderSocialMeta(opts) {
 var TITLE_MAX = 65;
 
 function pageTitle(game) {
+  if (game.seo && game.seo.metaTitle) return game.seo.metaTitle;
   var base = game.title + " — Play Free Online " + game.genre + " Game";
   var redundant =
     SITE_NAME.toLowerCase().indexOf(game.title.toLowerCase()) !== -1 ||
@@ -196,8 +197,10 @@ function renderFaviconLinks(assetsBase) {
   var base = assetsBase + "/favicon";
   return (
     '<link rel="icon" href="' + base + '.ico" sizes="any">\n' +
-    '<link rel="icon" type="image/png" sizes="32x32" href="' + base + '-32x32.png">\n' +
     '<link rel="icon" type="image/png" sizes="16x16" href="' + base + '-16x16.png">\n' +
+    '<link rel="icon" type="image/png" sizes="32x32" href="' + base + '-32x32.png">\n' +
+    '<link rel="icon" type="image/png" sizes="48x48" href="' + base + '-48x48.png">\n' +
+    '<link rel="icon" type="image/png" sizes="192x192" href="' + base + '-192x192.png">\n' +
     '<link rel="apple-touch-icon" sizes="180x180" href="' + base + '-apple-touch.png">\n'
   );
 }
