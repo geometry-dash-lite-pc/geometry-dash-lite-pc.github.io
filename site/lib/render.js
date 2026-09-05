@@ -54,6 +54,20 @@ function absUrl(siteUrl, relPath) {
   return siteUrl.replace(/\/*$/, "/") + String(relPath || "").replace(/^\/+/, "");
 }
 
+// GA4 tag, shared verbatim across every indexable page. Left out of the
+// 404 page, which redirects immediately and is noindexed anyway.
+function renderAnalytics() {
+  return (
+    '<script async src="https://www.googletagmanager.com/gtag/js?id=G-5FNRV4LNPB"></script>\n' +
+    "<script>\n" +
+    "  window.dataLayer = window.dataLayer || [];\n" +
+    "  function gtag(){dataLayer.push(arguments);}\n" +
+    "  gtag('js', new Date());\n" +
+    "  gtag('config', 'G-5FNRV4LNPB');\n" +
+    "</script>\n"
+  );
+}
+
 // <head> tags every page type shares: canonical + the four Open Graph
 // properties consumers actually require (type/title/image/url — omitting
 // og:image or og:url makes validators report the whole markup as missing)
@@ -363,6 +377,7 @@ function renderLegalPage(pageDef, catalog, mode, opts) {
     "<head>\n" +
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
+    renderAnalytics() +
     "<title>" + escapeHtml(pageDef.title) + " | " + SITE_NAME + "</title>\n" +
     '<meta name="description" content="' + escapeHtml(pageDef.metaDescription) + '">\n' +
     renderSocialMeta({
@@ -433,6 +448,7 @@ function renderAllGamesPage(catalog, mode, opts) {
     "<head>\n" +
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
+    renderAnalytics() +
     "<title>All Games | " + SITE_NAME + "</title>\n" +
     '<meta name="description" content="' + allGamesDescription + '">\n' +
     renderSocialMeta({
@@ -555,6 +571,7 @@ function renderPage(game, catalog, mode, opts) {
     "<head>\n" +
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
+    renderAnalytics() +
     "<title>" + escapeHtml(title) + "</title>\n" +
     '<meta name="description" content="' +
     escapeHtml(game.seo.metaDescription) +
