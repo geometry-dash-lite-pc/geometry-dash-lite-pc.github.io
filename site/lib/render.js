@@ -657,9 +657,10 @@ function renderPage(game, catalog, mode, opts) {
     '<div class="game-frame-inner">\n' +
     '<div class="poster" id="poster">\n' +
     '<div class="poster-art" aria-hidden="true">\n' +
-    '<span class="poster-tile t1">' +
-    escapeHtml(game.initial) +
-    "</span>\n" +
+    '<div class="poster-tile t1">' +
+    '<img class="poster-tile-image" src="' + imageSrc(game, assetsBase) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' +
+    "<span>" + escapeHtml(game.initial) + "</span>" +
+    "</div>\n" +
     "</div>\n" +
     (playable
       ? '<button class="play-btn" id="playBtn" aria-label="Play ' +

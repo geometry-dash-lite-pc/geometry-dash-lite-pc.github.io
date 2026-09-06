@@ -255,12 +255,18 @@ kbd{
 
 .poster-art{ position: relative; width: 100%; max-width: 340px; height: 120px; display: flex; align-items: center; justify-content: center; }
 .poster-tile{
+  position: relative; overflow: hidden;
   display: grid; place-items: center;
   font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: #fff;
   width: 110px; height: 110px; border-radius: 22px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   box-shadow: 0 14px 34px -10px color-mix(in srgb, var(--accent) 60%, transparent);
   animation: float-tile 4s ease-in-out infinite;
+}
+.poster-tile-image{ position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.poster-tile span{
+  position: relative; z-index: 2;
+  color: rgba(255,255,255,.7); text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 @keyframes float-tile{
   0%,100%{ transform: translateY(0) rotate(0deg); }
