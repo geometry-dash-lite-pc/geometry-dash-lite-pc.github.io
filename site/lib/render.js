@@ -68,6 +68,15 @@ function renderAnalytics() {
   );
 }
 
+// AdSense loader — also serves as the site-ownership check, so no separate
+// google-adsense-account meta tag is needed. ads.txt lives in site/verify/.
+function renderAdsense() {
+  return (
+    '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9392901402090329"\n' +
+    '     crossorigin="anonymous"></script>\n'
+  );
+}
+
 // <head> tags every page type shares: canonical + the four Open Graph
 // properties consumers actually require (type/title/image/url — omitting
 // og:image or og:url makes validators report the whole markup as missing)
@@ -378,6 +387,7 @@ function renderLegalPage(pageDef, catalog, mode, opts) {
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
     renderAnalytics() +
+    renderAdsense() +
     "<title>" + escapeHtml(pageDef.title) + " | " + SITE_NAME + "</title>\n" +
     '<meta name="description" content="' + escapeHtml(pageDef.metaDescription) + '">\n' +
     renderSocialMeta({
@@ -449,6 +459,7 @@ function renderAllGamesPage(catalog, mode, opts) {
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
     renderAnalytics() +
+    renderAdsense() +
     "<title>All Games | " + SITE_NAME + "</title>\n" +
     '<meta name="description" content="' + allGamesDescription + '">\n' +
     renderSocialMeta({
@@ -572,6 +583,7 @@ function renderPage(game, catalog, mode, opts) {
     '<meta charset="UTF-8">\n' +
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' +
     renderAnalytics() +
+    renderAdsense() +
     "<title>" + escapeHtml(title) + "</title>\n" +
     '<meta name="description" content="' +
     escapeHtml(game.seo.metaDescription) +
