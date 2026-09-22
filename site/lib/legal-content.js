@@ -8,8 +8,8 @@
  *
  */
 
-const EMAIL = "Myemail@gmail.com";
-const DMCA_EMAIL = "Myemail@gmail.com";
+const EMAIL = "geometrydashlitepcsuport@gmail.com";
+const DMCA_EMAIL = "geometrydashlitepcsuport@gmail.com";
 const SITE_NAME = "Geometry Dash Lite";
 const LAST_UPDATED = "August 26, 2026";
 
@@ -26,7 +26,13 @@ const ALL_GAMES_BLURB =
   "<p>Browse the games below, choose your favorite, and start playing directly in your browser. New games may be added regularly, so check back to discover more exciting games and find your next favorite!</p>";
 
 function page(slug, navLabel, title, metaDescription, bodyHtml) {
-  return { slug: slug, navLabel: navLabel, title: title, metaDescription: metaDescription, bodyHtml: bodyHtml };
+  return {
+    slug: slug,
+    navLabel: navLabel,
+    title: title,
+    metaDescription: metaDescription,
+    bodyHtml: bodyHtml,
+  };
 }
 
 const pages = [
@@ -34,24 +40,44 @@ const pages = [
     "contact",
     "Contact Us",
     "Contact Us",
-    "Get in touch with " + SITE_NAME + " for general questions, bug reports, feedback, or copyright concerns.",
+    "Get in touch with " +
+      SITE_NAME +
+      " for general questions, bug reports, feedback, or copyright concerns.",
     "<h1>Contact Us</h1>" +
       "<h2>General Inquiries and Support</h2>" +
-      "<p>Have a question, found a bug, or want to share feedback? Feel free to contact us at <a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a>. We'll do our best to get back to you as soon as possible.</p>" +
+      '<p>Have a question, found a bug, or want to share feedback? Feel free to contact us at <a href="mailto:' +
+      EMAIL +
+      '">' +
+      EMAIL +
+      "</a>. We'll do our best to get back to you as soon as possible.</p>" +
       "<h2>Copyright Infringement</h2>" +
-      "<p>If you believe content on this website infringes your copyright, please contact us at <a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a>. Please include the relevant details and the URL of the content so we can review your request. See our full <a href=\"dmca.html\">DMCA Policy</a> for what to include.</p>" +
+      '<p>If you believe content on this website infringes your copyright, please contact us at <a href="mailto:' +
+      EMAIL +
+      '">' +
+      EMAIL +
+      '</a>. Please include the relevant details and the URL of the content so we can review your request. See our full <a href="dmca.html">DMCA Policy</a> for what to include.</p>' +
       "<h2>Contact Information</h2>" +
-      "<p>Email: <a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a></p>"
+      '<p>Email: <a href="mailto:' +
+      EMAIL +
+      '">' +
+      EMAIL +
+      "</a></p>",
   ),
   page(
     "dmca",
     "DMCA",
     "DMCA Copyright Policy",
-    "DMCA takedown policy for " + SITE_NAME + ", including how to submit a copyright infringement notice.",
+    "DMCA takedown policy for " +
+      SITE_NAME +
+      ", including how to submit a copyright infringement notice.",
     "<h1>DMCA Copyright Policy</h1>" +
-      "<p class=\"muted\">Last updated: " + LAST_UPDATED + "</p>" +
+      '<p class="muted">Last updated: ' +
+      LAST_UPDATED +
+      "</p>" +
       "<p>We respect the intellectual property rights of copyright owners and expect our users and visitors to do the same.</p>" +
-      "<p>If you believe that any content available on " + SITE_NAME + " infringes your copyright, you may submit a DMCA takedown request.</p>" +
+      "<p>If you believe that any content available on " +
+      SITE_NAME +
+      " infringes your copyright, you may submit a DMCA takedown request.</p>" +
       "<h2>Copyright Infringement Notice</h2>" +
       "<p>To submit a copyright infringement complaint, please provide the following information:</p>" +
       "<ul>" +
@@ -65,8 +91,12 @@ const pages = [
       "</ul>" +
       "<h2>DMCA Contact</h2>" +
       "<p>Please send all DMCA notices and copyright-related requests to:</p>" +
-      "<p>Email: <a href=\"mailto:" + DMCA_EMAIL + "\">" + DMCA_EMAIL + "</a></p>" +
-      "<p>Please include \"DMCA Copyright Notice\" in the subject line of your email.</p>" +
+      '<p>Email: <a href="mailto:' +
+      DMCA_EMAIL +
+      '">' +
+      DMCA_EMAIL +
+      "</a></p>" +
+      '<p>Please include "DMCA Copyright Notice" in the subject line of your email.</p>' +
       "<h2>Removal of Content</h2>" +
       "<p>After receiving a valid DMCA notice, we will review the complaint and, where appropriate, remove or disable access to the allegedly infringing material.</p>" +
       "<p>We may also contact the person responsible for the content to inform them about the complaint.</p>" +
@@ -80,17 +110,27 @@ const pages = [
       "<p>If you believe that third-party content accessible through our website infringes your copyright, please contact us using the email address above with the relevant details so that we can investigate the matter.</p>" +
       "<h2>Contact</h2>" +
       "<p>For copyright-related questions, DMCA notices, or other concerns, please contact us at:</p>" +
-      "<p><a href=\"mailto:" + DMCA_EMAIL + "\">" + DMCA_EMAIL + "</a></p>" +
-      "<p>We may update this policy from time to time to reflect changes to our website or applicable laws.</p>"
+      '<p><a href="mailto:' +
+      DMCA_EMAIL +
+      '">' +
+      DMCA_EMAIL +
+      "</a></p>" +
+      "<p>We may update this policy from time to time to reflect changes to our website or applicable laws.</p>",
   ),
   page(
     "privacy-policy",
     "Privacy Policy",
     "Privacy Policy",
-    "How " + SITE_NAME + " collects, uses, and protects information, including cookies and analytics.",
+    "How " +
+      SITE_NAME +
+      " collects, uses, and protects information, including cookies and analytics.",
     "<h1>Privacy Policy</h1>" +
-      "<p class=\"muted\">Last updated: " + LAST_UPDATED + "</p>" +
-      "<p>At " + SITE_NAME + ", we value your privacy and want you to feel comfortable using our website. This Privacy Policy explains what information may be collected, how it may be used, and the choices you have when visiting our website.</p>" +
+      '<p class="muted">Last updated: ' +
+      LAST_UPDATED +
+      "</p>" +
+      "<p>At " +
+      SITE_NAME +
+      ", we value your privacy and want you to feel comfortable using our website. This Privacy Policy explains what information may be collected, how it may be used, and the choices you have when visiting our website.</p>" +
       "<h2>Information We Collect</h2>" +
       "<p>We do not intentionally collect personal information such as your name, home address, phone number, or other identifying information unless you voluntarily provide it to us.</p>" +
       "<p>For example, if you contact us by email, we may receive your email address and any information you choose to include in your message. We use this information only to respond to your request and communicate with you.</p>" +
@@ -98,7 +138,7 @@ const pages = [
       "<h2>Cookies and Similar Technologies</h2>" +
       "<p>Our website may use cookies and similar technologies to improve functionality and understand how visitors use the website.</p>" +
       "<p>Cookies are small files stored on your device by your web browser. They can help remember preferences, measure website traffic, and improve your overall browsing experience.</p>" +
-      "<p>You can manage or disable cookies through your browser settings. However, disabling certain cookies may affect how some parts of the website work. See our <a href=\"cookies-policy.html\">Cookies Policy</a> for more detail.</p>" +
+      '<p>You can manage or disable cookies through your browser settings. However, disabling certain cookies may affect how some parts of the website work. See our <a href="cookies-policy.html">Cookies Policy</a> for more detail.</p>' +
       "<h2>Advertising</h2>" +
       "<p>We may display advertisements from third-party advertising companies. These companies may use cookies, web beacons, or similar technologies to collect information about your visits to websites in order to provide more relevant advertisements.</p>" +
       "<p>Third-party advertising providers may have their own privacy policies that explain how they collect and use information. We recommend reviewing those policies for more information about their practices.</p>" +
@@ -120,10 +160,14 @@ const pages = [
       "<p>If you would like to make a privacy-related request, please contact us using the email address below.</p>" +
       "<h2>Changes to This Privacy Policy</h2>" +
       "<p>We may update this Privacy Policy from time to time to reflect changes to our website, services, or applicable privacy requirements.</p>" +
-      "<p>When we make changes, we will update the \"Last updated\" date at the top of this page. We encourage you to review this page occasionally to stay informed about how we handle information.</p>" +
+      '<p>When we make changes, we will update the "Last updated" date at the top of this page. We encourage you to review this page occasionally to stay informed about how we handle information.</p>' +
       "<h2>Contact Us</h2>" +
       "<p>If you have any questions, concerns, or requests regarding this Privacy Policy, please contact us at:</p>" +
-      "<p><a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a></p>"
+      '<p><a href="mailto:' +
+      EMAIL +
+      '">' +
+      EMAIL +
+      "</a></p>",
   ),
   page(
     "terms-and-conditions",
@@ -131,14 +175,20 @@ const pages = [
     "Terms and Conditions",
     "The terms of service governing your use of " + SITE_NAME + ".",
     "<h1>Terms and Conditions</h1>" +
-      "<p class=\"muted\">Last updated: " + LAST_UPDATED + "</p>" +
-      "<p>Welcome to " + SITE_NAME + ". By accessing or using our website, you agree to these Terms of Service. If you do not agree with these terms, please stop using the website.</p>" +
+      '<p class="muted">Last updated: ' +
+      LAST_UPDATED +
+      "</p>" +
+      "<p>Welcome to " +
+      SITE_NAME +
+      ". By accessing or using our website, you agree to these Terms of Service. If you do not agree with these terms, please stop using the website.</p>" +
       "<h2>Use of Our Website</h2>" +
       "<p>You may use our website for personal and non-commercial purposes. You agree to use the website responsibly and in accordance with applicable laws.</p>" +
       "<p>You must not attempt to damage, disrupt, overload, or interfere with the website or its servers. You also agree not to use the website for any unlawful or abusive activity.</p>" +
       "<h2>Game Content</h2>" +
       "<p>Our website provides information and access to online gaming content for entertainment purposes.</p>" +
-      "<p>Geometry Dash, its name, graphics, characters, and related trademarks are the property of their respective owners. " + SITE_NAME + " is an independent website and is not affiliated with or endorsed by RobTop Games or Robert Topala.</p>" +
+      "<p>Geometry Dash, its name, graphics, characters, and related trademarks are the property of their respective owners. " +
+      SITE_NAME +
+      " is an independent website and is not affiliated with or endorsed by RobTop Games or Robert Topala.</p>" +
       "<h2>Third-Party Content and Links</h2>" +
       "<p>Our website may include links, advertisements, or content provided by third parties. We do not control these third-party services and are not responsible for their content, availability, security, or privacy practices.</p>" +
       "<p>Any interaction you have with a third-party website or service is between you and that third party.</p>" +
@@ -149,25 +199,37 @@ const pages = [
       "<p>We try to keep the website available and working properly, but we cannot guarantee uninterrupted access. The website may occasionally be unavailable because of maintenance, technical problems, updates, or circumstances beyond our control.</p>" +
       "<p>We may change, suspend, or remove parts of the website at any time without prior notice.</p>" +
       "<h2>Disclaimer of Warranties</h2>" +
-      "<p>The website and its content are provided on an \"as is\" and \"as available\" basis.</p>" +
+      '<p>The website and its content are provided on an "as is" and "as available" basis.</p>' +
       "<p>We do not guarantee that the website will always be accurate, complete, secure, error-free, or available. Your use of the website is at your own risk.</p>" +
       "<h2>Limitation of Liability</h2>" +
-      "<p>To the maximum extent permitted by applicable law, " + SITE_NAME + " and its operators will not be responsible for any direct, indirect, incidental, or consequential loss or damage resulting from your use of, or inability to use, the website or its content.</p>" +
+      "<p>To the maximum extent permitted by applicable law, " +
+      SITE_NAME +
+      " and its operators will not be responsible for any direct, indirect, incidental, or consequential loss or damage resulting from your use of, or inability to use, the website or its content.</p>" +
       "<h2>Changes to These Terms</h2>" +
-      "<p>We may update these Terms of Service from time to time. Any changes will be posted on this page, and the \"Last updated\" date will be updated accordingly.</p>" +
+      '<p>We may update these Terms of Service from time to time. Any changes will be posted on this page, and the "Last updated" date will be updated accordingly.</p>' +
       "<p>By continuing to use the website after changes are posted, you agree to the updated terms.</p>" +
       "<h2>Contact Us</h2>" +
       "<p>If you have any questions about these Terms of Service, please contact us at:</p>" +
-      "<p><a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a></p>"
+      '<p><a href="mailto:' +
+      EMAIL +
+      '">' +
+      EMAIL +
+      "</a></p>",
   ),
   page(
     "cookies-policy",
     "Cookies Policy",
     "Cookies Policy",
-    "How " + SITE_NAME + " uses cookies and similar technologies, and how to manage them.",
+    "How " +
+      SITE_NAME +
+      " uses cookies and similar technologies, and how to manage them.",
     "<h1>Cookies Policy</h1>" +
-      "<p class=\"muted\">Last updated: " + LAST_UPDATED + "</p>" +
-      "<p>At " + SITE_NAME + ", we use cookies and similar technologies to help our website work properly, understand how visitors use it, and improve your overall experience.</p>" +
+      '<p class="muted">Last updated: ' +
+      LAST_UPDATED +
+      "</p>" +
+      "<p>At " +
+      SITE_NAME +
+      ", we use cookies and similar technologies to help our website work properly, understand how visitors use it, and improve your overall experience.</p>" +
       "<p>This Cookies Policy explains what cookies are, how we may use them, and what choices you have.</p>" +
       "<h2>What Are Cookies?</h2>" +
       "<p>Cookies are small text files that are stored on your device when you visit a website. They allow websites to remember certain information and can help improve functionality, performance, and the browsing experience.</p>" +
@@ -193,21 +255,33 @@ const pages = [
       "<p>The information collected by advertising providers is handled according to their own privacy policies.</p>" +
       "<h2>Changes to This Cookies Policy</h2>" +
       "<p>We may update this Cookies Policy from time to time if our website, services, or cookie practices change.</p>" +
-      "<p>Any updates will be posted on this page with a new \"Last updated\" date.</p>" +
+      '<p>Any updates will be posted on this page with a new "Last updated" date.</p>' +
       "<h2>Contact Us</h2>" +
       "<p>If you have questions about this Cookies Policy, please contact us at:</p>" +
-      "<p><a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a></p>"
+      '<p><a href="mailto:' +
+      EMAIL +
+      '">' +
+      EMAIL +
+      "</a></p>",
   ),
   page(
     "disclaimer",
     "Disclaimer",
     "Disclaimer",
-    "Disclaimer covering the informational content and third-party trademarks referenced on " + SITE_NAME + ".",
+    "Disclaimer covering the informational content and third-party trademarks referenced on " +
+      SITE_NAME +
+      ".",
     "<h1>Disclaimer</h1>" +
-      "<p class=\"muted\">Last updated: " + LAST_UPDATED + "</p>" +
-      "<p>The information and content provided on " + SITE_NAME + " are for general informational and entertainment purposes only.</p>" +
+      '<p class="muted">Last updated: ' +
+      LAST_UPDATED +
+      "</p>" +
+      "<p>The information and content provided on " +
+      SITE_NAME +
+      " are for general informational and entertainment purposes only.</p>" +
       "<h2>Game Content</h2>" +
-      "<p>" + SITE_NAME + " is an independent website and is not affiliated with, endorsed by, or sponsored by RobTop Games or Robert Topala.</p>" +
+      "<p>" +
+      SITE_NAME +
+      " is an independent website and is not affiliated with, endorsed by, or sponsored by RobTop Games or Robert Topala.</p>" +
       "<p>Geometry Dash and related trademarks, logos, characters, and other intellectual property belong to their respective owners. We do not claim ownership of these trademarks.</p>" +
       "<h2>Third-Party Content</h2>" +
       "<p>Our website may contain links to third-party websites or services. We are not responsible for the content, policies, availability, or practices of third-party websites.</p>" +
@@ -215,8 +289,18 @@ const pages = [
       "<p>We try to keep the information on our website accurate and up to date, but we cannot guarantee that all information is complete, accurate, or current. Use the information provided on this website at your own discretion.</p>" +
       "<h2>Contact</h2>" +
       "<p>If you have any questions or concerns about this disclaimer, please contact us at:</p>" +
-      "<p><a href=\"mailto:" + EMAIL + "\">" + EMAIL + "</a></p>"
+      '<p><a href="mailto:' +
+      EMAIL +
+      '">' +
+      EMAIL +
+      "</a></p>",
   ),
 ];
 
-module.exports = { pages: pages, SITE_NAME: SITE_NAME, EMAIL: EMAIL, ABOUT_BLURB: ABOUT_BLURB, ALL_GAMES_BLURB: ALL_GAMES_BLURB };
+module.exports = {
+  pages: pages,
+  SITE_NAME: SITE_NAME,
+  EMAIL: EMAIL,
+  ABOUT_BLURB: ABOUT_BLURB,
+  ALL_GAMES_BLURB: ALL_GAMES_BLURB,
+};
